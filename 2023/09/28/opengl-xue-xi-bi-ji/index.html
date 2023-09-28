@@ -378,9 +378,8 @@
 <p><a target="_blank" rel="noopener" href="https://learnopengl.com/Getting-started/OpenGL">LearnOpenGL - OpenGL — 学习OpenGL- OpenGL</a></p>
 <p><a target="_blank" rel="noopener" href="https://learnopengl-cn.github.io/">主页 - LearnOpenGL CN (learnopengl-cn.github.io)</a></p>
 <p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/dbc430ed349a4411abcf3efba7409c5f.png" alt="img"></p>
-<h1 id="以下是一些常用的OpenGL函数的清单，包括它们的用法和参数含义："><a href="#以下是一些常用的OpenGL函数的清单，包括它们的用法和参数含义：" class="headerlink" title="以下是一些常用的OpenGL函数的清单，包括它们的用法和参数含义："></a>以下是一些常用的OpenGL函数的清单，包括它们的用法和参数含义：</h1><ol>
-<li><p><strong>glClearColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)</strong></p>
-<ul>
+<h2 id="以下是一些常用的OpenGL函数的清单，包括它们的用法和参数含义："><a href="#以下是一些常用的OpenGL函数的清单，包括它们的用法和参数含义：" class="headerlink" title="以下是一些常用的OpenGL函数的清单，包括它们的用法和参数含义："></a>以下是一些常用的OpenGL函数的清单，包括它们的用法和参数含义：</h2><ol>
+<li><h3 id="glClearColor-GLfloat-red-GLfloat-green-GLfloat-blue-GLfloat-alpha"><a href="#glClearColor-GLfloat-red-GLfloat-green-GLfloat-blue-GLfloat-alpha" class="headerlink" title="glClearColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)"></a><strong>glClearColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)</strong></h3><ul>
 <li>用法：设置背景清除颜色。</li>
 <li>参数含义：<ul>
 <li><code>red</code>：红色分量，取值范围为0.0到1.0。</li>
@@ -391,8 +390,7 @@
 </li>
 </ul>
 </li>
-<li><p><strong>glClear(GLbitfield mask)</strong></p>
-<ul>
+<li><h3 id="glClear-GLbitfield-mask"><a href="#glClear-GLbitfield-mask" class="headerlink" title="glClear(GLbitfield mask)"></a><strong>glClear(GLbitfield mask)</strong></h3><ul>
 <li>用法：清除指定的缓冲区。</li>
 <li>参数含义：<ul>
 <li><code>mask</code>：要清除的缓冲区，可以是<code>GL_COLOR_BUFFER_BIT</code>（颜色缓冲区）、<code>GL_DEPTH_BUFFER_BIT</code>（深度缓冲区）、<code>GL_STENCIL_BUFFER_BIT</code>（模板缓冲区）的组合。</li>
@@ -400,8 +398,7 @@
 </li>
 </ul>
 </li>
-<li><p><strong>glMatrixMode(GLenum mode)</strong></p>
-<ul>
+<li><h3 id="glMatrixMode-GLenum-mode"><a href="#glMatrixMode-GLenum-mode" class="headerlink" title="glMatrixMode(GLenum mode)"></a><strong>glMatrixMode(GLenum mode)</strong></h3><ul>
 <li>用法：设置当前矩阵模式。</li>
 <li>参数含义：<ul>
 <li><code>mode</code>：矩阵模式，可以是<code>GL_MODELVIEW</code>（模型视图矩阵）、<code>GL_PROJECTION</code>（投影矩阵）、<code>GL_TEXTURE</code>（纹理矩阵）之一。</li>
@@ -409,13 +406,11 @@
 </li>
 </ul>
 </li>
-<li><p><strong>glLoadIdentity()</strong></p>
-<ul>
+<li><h3 id="glLoadIdentity"><a href="#glLoadIdentity" class="headerlink" title="glLoadIdentity()"></a><strong>glLoadIdentity()</strong></h3><ul>
 <li>用法：将当前矩阵重置为单位矩阵。</li>
 </ul>
 </li>
-<li><p><strong>gluOrtho2D(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top)</strong></p>
-<ul>
+<li><h3 id="gluOrtho2D-GLdouble-left-GLdouble-right-GLdouble-bottom-GLdouble-top"><a href="#gluOrtho2D-GLdouble-left-GLdouble-right-GLdouble-bottom-GLdouble-top" class="headerlink" title="gluOrtho2D(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top)"></a><strong>gluOrtho2D(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top)</strong></h3><ul>
 <li>用法：设置正交投影矩阵。</li>
 <li>参数含义：<ul>
 <li><code>left</code>、<code>right</code>、<code>bottom</code>、<code>top</code>：视图体积的边界。</li>
@@ -423,8 +418,7 @@
 </li>
 </ul>
 </li>
-<li><p><strong>glBegin(GLenum mode)</strong> 和 <strong>glEnd()</strong></p>
-<ul>
+<li><h3 id="glBegin-GLenum-mode-和-glEnd"><a href="#glBegin-GLenum-mode-和-glEnd" class="headerlink" title="glBegin(GLenum mode) 和 glEnd()"></a><strong>glBegin(GLenum mode)</strong> 和 <strong>glEnd()</strong></h3><ul>
 <li>用法：定义要绘制的图元的起始和结束。</li>
 <li>参数含义：<ul>
 <li><code>mode</code>：绘制的图元类型，如<code>GL_POINTS</code>（点）、<code>GL_LINES</code>（线段）、<code>GL_TRIANGLES</code>（三角形）等。</li>
@@ -432,8 +426,7 @@
 </li>
 </ul>
 </li>
-<li><p><strong>glVertex2f(GLfloat x, GLfloat y)</strong></p>
-<ul>
+<li><h3 id="glVertex2f-GLfloat-x-GLfloat-y"><a href="#glVertex2f-GLfloat-x-GLfloat-y" class="headerlink" title="glVertex2f(GLfloat x, GLfloat y)"></a><strong>glVertex2f(GLfloat x, GLfloat y)</strong></h3><ul>
 <li>用法：指定一个顶点坐标。</li>
 <li>参数含义：<ul>
 <li><code>x</code>、<code>y</code>：顶点的x和y坐标。</li>
@@ -441,8 +434,7 @@
 </li>
 </ul>
 </li>
-<li><p><strong>glColor3f(GLfloat red, GLfloat green, GLfloat blue)</strong></p>
-<ul>
+<li><h3 id="glColor3f-GLfloat-red-GLfloat-green-GLfloat-blue"><a href="#glColor3f-GLfloat-red-GLfloat-green-GLfloat-blue" class="headerlink" title="glColor3f(GLfloat red, GLfloat green, GLfloat blue)"></a><strong>glColor3f(GLfloat red, GLfloat green, GLfloat blue)</strong></h3><ul>
 <li>用法：设置当前颜色。</li>
 <li>参数含义：<ul>
 <li><code>red</code>、<code>green</code>、<code>blue</code>：颜色的红、绿、蓝分量，取值范围为0.0到1.0。</li>
@@ -450,13 +442,11 @@
 </li>
 </ul>
 </li>
-<li><p><strong>glPushMatrix()</strong> 和 <strong>glPopMatrix()</strong></p>
-<ul>
+<li><h3 id="glPushMatrix-和-glPopMatrix"><a href="#glPushMatrix-和-glPopMatrix" class="headerlink" title="glPushMatrix() 和 glPopMatrix()"></a><strong>glPushMatrix()</strong> 和 <strong>glPopMatrix()</strong></h3><ul>
 <li>用法：保存和恢复当前矩阵状态。</li>
 </ul>
 </li>
-<li><p><strong>glTranslatef(GLfloat x, GLfloat y, GLfloat z)</strong></p>
-<ul>
+<li><h3 id="glTranslatef-GLfloat-x-GLfloat-y-GLfloat-z"><a href="#glTranslatef-GLfloat-x-GLfloat-y-GLfloat-z" class="headerlink" title="glTranslatef(GLfloat x, GLfloat y, GLfloat z)"></a><strong>glTranslatef(GLfloat x, GLfloat y, GLfloat z)</strong></h3><ul>
 <li>用法：执行平移变换。</li>
 <li>参数含义：<ul>
 <li><code>x</code>、<code>y</code>、<code>z</code>：平移的距离。</li>
@@ -464,8 +454,7 @@
 </li>
 </ul>
 </li>
-<li><p><strong>glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)</strong></p>
-<ul>
+<li><h3 id="glRotatef-GLfloat-angle-GLfloat-x-GLfloat-y-GLfloat-z"><a href="#glRotatef-GLfloat-angle-GLfloat-x-GLfloat-y-GLfloat-z" class="headerlink" title="glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)"></a><strong>glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)</strong></h3><ul>
 <li>用法：执行旋转变换。</li>
 <li>参数含义：<ul>
 <li><code>angle</code>：旋转角度（度）。</li>
@@ -474,8 +463,7 @@
 </li>
 </ul>
 </li>
-<li><p><strong>glViewport(GLint x, GLint y, GLsizei width, GLsizei height)</strong></p>
-<ul>
+<li><h3 id="glViewport-GLint-x-GLint-y-GLsizei-width-GLsizei-height"><a href="#glViewport-GLint-x-GLint-y-GLsizei-width-GLsizei-height" class="headerlink" title="glViewport(GLint x, GLint y, GLsizei width, GLsizei height)"></a><strong>glViewport(GLint x, GLint y, GLsizei width, GLsizei height)</strong></h3><ul>
 <li>用法：设置视口。</li>
 <li>参数含义：<ul>
 <li><code>x</code>、<code>y</code>：视口的左下角坐标。</li>
