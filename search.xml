@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>根据数据估算时间复杂度</title>
+      <link href="/2023/10/07/gen-ju-shu-ju-gu-suan-shi-jian-fu-za-du/"/>
+      <url>/2023/10/07/gen-ju-shu-ju-gu-suan-shi-jian-fu-za-du/</url>
+      
+        <content type="html"><![CDATA[<p><strong>前提：一般都是1秒对应一千万次计算</strong></p><p>拿题目数据规模反推大概用个啥算法用些啥优化。</p><p><strong>10^5级别？基本上是O(nlogn)；10^7?那必须O(n)了；10^3基本上不就是个O(n^2)；蹦跶出来个诸如20以内的条件基本上就暴力了；如果俩参数范围一个才十几二十另一个成千上万基本上是个状态压缩DP类似的玩意了……诸如此类。</strong></p><p>就因为是竞赛，你得正反都能估啊……算法推得出复杂度，复杂度推得出算法什么的。</p><p>当然了也不仅仅是一个渐进最大时间复杂度，通常来说还需要熟悉平均时间复杂度……</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 程序设计 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>vector索引问题</title>
       <link href="/2023/10/04/vector-suo-yin-wen-ti/"/>
       <url>/2023/10/04/vector-suo-yin-wen-ti/</url>
