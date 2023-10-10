@@ -4,10 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="根据数据估算时间复杂度, MySite">
-    <meta name="description" content="前提：一般都是1秒对应一千万次计算（也可能是一亿）
-拿题目数据规模反推大概用个啥算法用些啥优化。
-10^5级别？基本上是O(nlogn)；10^7?那必须O(n)了；10^3基本上不就是个O(n^2)；蹦跶出来个诸如20以内的条件基本上就暴">
+    <meta name="keywords" content="搜索, MySite">
+    <meta name="description" content="BFS适用于需要找到最短路径或距离起点最近的解决方案的问题，而DFS适用于需要深度探索或搜索所有可能解决方案的问题。
+BFS通常只用来找一个解决方案，DFS用来找所有解决方案。BFS当然可以搜索所有解决方案，而且时间复杂度跟DFS相同，但是">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +18,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>根据数据估算时间复杂度 | MySite</title>
+    <title>搜索 | MySite</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/liwuxuan/liwuxuan.github.io/favicon.png">
     
     <style>
@@ -282,12 +281,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/liwuxuan/liwuxuan.github.io/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/liwuxuan/liwuxuan.github.io/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">根据数据估算时间复杂度</h1>
+                    <h1 class="description center-align post-title">搜索</h1>
                 </div>
             </div>
         </div>
@@ -327,7 +326,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-10-07
+                    2023-10-10
                 </div>
                 
 
@@ -338,7 +337,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    6 分
                 </div>
                 
 
@@ -358,12 +357,42 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><strong>前提：一般都是1秒对应一千万次计算（也可能是一亿）</strong></p>
-<p>拿题目数据规模反推大概用个啥算法用些啥优化。</p>
-<p><strong>10^5级别？基本上是O(nlogn)；10^7?那必须O(n)了；10^3基本上不就是个O(n^2)；蹦跶出来个诸如20以内的条件基本上就暴力了；如果俩参数范围一个才十几二十另一个成千上万基本上是个状态压缩DP类似的玩意了……诸如此类。</strong></p>
-<p>就因为是竞赛，你得正反都能估啊……算法推得出复杂度，复杂度推得出算法什么的。</p>
-<p>当然了也不仅仅是一个渐进最大时间复杂度，通常来说还需要熟悉平均时间复杂度……</p>
-<p><a target="_blank" rel="noopener" href="https://liam.page/2016/06/20/big-O-cheat-sheet/">https://liam.page/2016/06/20/big-O-cheat-sheet/</a></p>
+                <p><strong>BFS适用于需要找到最短路径或距离起点最近的解决方案的问题，而DFS适用于需要深度探索或搜索所有可能解决方案的问题。</strong></p>
+<p><strong>BFS通常只用来找一个解决方案，DFS用来找所有解决方案。</strong>BFS当然可以搜索所有解决方案，而且时间复杂度跟DFS相同，但是BFS的空间复杂度比DFS高太多了。</p>
+<p>BFS和DFS的相邻点 有的时候很明显，有的时候不明显，需要自己总结一下。在做CSP题时，基本上没有明显的节点，都是需要抽象出来树形结构的</p>
+<p><strong>做题第一步，纸上写出树形结构，分别考虑边和点。边考虑回溯，点考虑BFS和DFS。一定要考虑记忆化搜索和剪枝，不然一般都会超时。</strong></p>
+<h2 id="BFS-最短路径问题"><a href="#BFS-最短路径问题" class="headerlink" title="BFS(最短路径问题)"></a>BFS(最短路径问题)</h2><h3 id="BFS问题的本质都是找从start到target的最短路"><a href="#BFS问题的本质都是找从start到target的最短路" class="headerlink" title="BFS问题的本质都是找从start到target的最短路"></a><code>BFS</code>问题的本质都是找从<code>start</code>到<code>target</code>的最短路</h3><p>如果是找最短路径，第一时间想<code>BFS</code>，注意是<code>短</code></p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">BFS</span><span class="params">(Node start, Node target)</span> </span>{</span><br><span class="line">    queue&lt;Node&gt; q; </span><br><span class="line">    unordered_set&lt;Node&gt; visited;<span class="comment">//一般是用bool vis[size];用1表示自己去过了,数组访问O(1)。不过unordered_set也差不多。</span></span><br><span class="line">    <span class="comment">//一般是用数组。但是一些问题的索引不好确认，用unordered_set更好，普适性更好一些，但是需要确认元素是否重复（用值时）</span></span><br><span class="line">    q.<span class="built_in">push</span>(start); </span><br><span class="line">    <span class="comment">//visited.insert(start);//有时候写上会有问题，有了下面的，这里不要写了</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (!q.<span class="built_in">empty</span>()) {</span><br><span class="line">        <span class="type">int</span> sz = q.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; sz; i++) {</span><br><span class="line">            Node cur = q.<span class="built_in">front</span>();</span><br><span class="line">            q.<span class="built_in">pop</span>();</span><br><span class="line">            visited.<span class="built_in">insert</span>(cur);<span class="comment">//必要</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (cur == target)</span><br><span class="line">                <span class="keyword">return</span> step;</span><br><span class="line">            <span class="keyword">for</span> (Node x : cur.<span class="built_in">adj</span>()) {<span class="comment">//不管是 邻接表 还是邻接数组 还是链式前向星 都要会写</span></span><br><span class="line">                <span class="keyword">if</span> (visited.<span class="built_in">count</span>(x) == <span class="number">0</span>) {</span><br><span class="line">                    q.<span class="built_in">push</span>(x);</span><br><span class="line">                    visited.<span class="built_in">insert</span>(x);</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// 如果走到这里，说明在图中没有找到目标节点</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>BFS</code>的<code>vis</code>数组一般只加不减，<code>vis</code>只是用来指示	邻接点	是否已经遍历过了</p>
+<h2 id="BFS优化（双向BFS）"><a href="#BFS优化（双向BFS）" class="headerlink" title="BFS优化（双向BFS）"></a><code>BFS</code>优化（双向<code>BFS</code>）</h2><p><strong>前提：已经知道终点，从起点和终点分别开始<code>BFS</code>，可以降低	大约一半<code>空间复杂度</code>和<code>时间复杂度</code>。这种技巧实际上并没有降低big O时间复杂度。用BFS还是双向BFS看情况吧。</strong></p>
+<p>双向 BFS 还是遵循 BFS 算法框架的，只是<strong>不再使用队列，而是使用<code>unordered_set</code>方便快速判断两个集合q1、q2是否有交集。起点和终点分别加入<code>unordered_set</code>，遍历一个集合的时候，判断另一个集合是否有该元素。</strong>。</p>
+<p>另外的一个技巧点就是 <strong>while 循环 <code>while( !q1.empty()&amp;&amp;!q2.empty()  )</code>的最后交换 <code>q1</code> 和 <code>q2</code> 的内容</strong>，所以只要默认扩散 <code>q1</code> 就相当于轮流扩散 <code>q1</code> 和 <code>q2</code>。			或者 可以加一个<strong>判定<code>if (q1.size() &gt; q2.size()) </code>交换，仍然默认<code>q1</code>，但每次使用最小的集合</strong>。跟上边没什么区别。</p>
+<p><strong>必掌握：求“最短路径”</strong></p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">BFS</span><span class="params">(Node start, Node target)</span> </span>{</span><br><span class="line">    unordered_set&lt;Node&gt; q1, q2, visited;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> step = <span class="number">0</span>;<span class="comment">//记录路径长度</span></span><br><span class="line">    q1.<span class="built_in">insert</span>(start);</span><br><span class="line">    q2.<span class="built_in">insert</span>(target);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(!q1.<span class="built_in">empty</span>() &amp;&amp; !q2.<span class="built_in">empty</span>()){</span><br><span class="line">        <span class="comment">// 哈希集合在遍历的过程中不能修改，用 temp 存储扩散结果</span></span><br><span class="line">        unordered_set&lt;string&gt; temp;<span class="comment">//现在是q1遍历后的q1，相当于clear了</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 将 q1 中的所有节点向周围扩散 */</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> cur : q1){</span><br><span class="line">            <span class="comment">/* 判断是否到达终点 */</span></span><br><span class="line">            <span class="keyword">if</span>(q2.<span class="built_in">count</span>(cur))</span><br><span class="line">                <span class="keyword">return</span> step;<span class="comment">//q1、q2相交，代表找到了</span></span><br><span class="line"></span><br><span class="line">            visited.<span class="built_in">insert</span>(cur);</span><br><span class="line"></span><br><span class="line">            <span class="comment">/* 将一个节点的未遍历相邻节点加入集合 */</span></span><br><span class="line">            <span class="keyword">for</span> (Node x : cur.<span class="built_in">adj</span>()) {<span class="comment">//不管是 邻接表 还是邻接数组 还是链式前向星 都要会写</span></span><br><span class="line">                <span class="keyword">if</span> (visited.<span class="built_in">count</span>(x) == <span class="number">0</span>) {</span><br><span class="line">                    temp.<span class="built_in">push</span>(x);<span class="comment">//注意：应该是往temp里面加入元素</span></span><br><span class="line">                    visited.<span class="built_in">insert</span>(x);</span><br><span class="line">                }</span><br><span class="line">       		}</span><br><span class="line">        <span class="comment">/* 在这里增加步数 */</span></span><br><span class="line">        step++;</span><br><span class="line">        <span class="comment">// temp 相当于 新的 q1</span></span><br><span class="line">        <span class="comment">// 这里交换 q1 q2，下一轮 while 就是扩散 q2</span></span><br><span class="line">        q1 = q2;</span><br><span class="line">        q2 = temp;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://oi-wiki.org/search/astar/">A* - OI Wiki (oi-wiki.org)</a></p>
+<p>这里涉及到了一个启发式搜索</p>
+<h2 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a><code>DFS</code></h2><p>DFS和回溯一般都是混用的，大家没严格区分</p>
+<p>时间复杂度较高，但是可以拿部分的分 </p>
+<p>本质上是 暴力穷举，递归函数，跟回溯基本一致。不要特别在意区分回溯和<code>DFS</code>，只要能做题就行。一般都是void，不用到返回值。</p>
+<p><strong><code>DFS</code>必掌握“N皇后问题、全排列”</strong>，呃，这俩都是回溯</p>
+<p>一般不会求最值，没有最优子结构</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> vis[N];<span class="comment">//DFS经常用到，当然也可以用unordered_map</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(参数)</span> </span>{</span><br><span class="line">  <span class="keyword">if</span> (终止条件) {</span><br><span class="line">      处理语句</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">  }</span><br><span class="line">    <span class="keyword">for</span> (邻接点) {</span><br><span class="line">        <span class="keyword">if</span>(下一步有效)<span class="comment">//一般是 !vis[i]</span></span><br><span class="line">        {</span><br><span class="line">            处理</span><br><span class="line">            vis[i]=<span class="number">1</span>;</span><br><span class="line">      			<span class="built_in">dfs</span>(参数);</span><br><span class="line">      		撤销处理</span><br><span class="line">            vis[i]=<span class="number">0</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">  </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>就是二叉树遍历的<code>void traverse()</code>函数</p>
+<p><strong>一般情况下，回溯算法的「做选择」和「撤销选择」在 for 循环里面，而<code>DFS</code>的操作在 for 循环外面。这是回溯算法和 DFS 算法的区别所在：回溯算法关注的不是节点，而是树枝（也可以说边，就是for里面 的路径选择）。而DFS只处理本身节点的选择和撤销选择。二者的区别在于根节点，DFS会处理和撤销处理根节点，但是回溯不行（回溯关注的是边，边数=点数-1（无环图成立，但是回溯等一般的 图算法都会visited掉环，所以对回溯是永远会漏掉根节点（大概？） ），回溯会漏掉根节点）。</strong></p>
+<p>dfs和回溯都是void遍历+外部变量，动态规划是有返回值的（后序遍历）。相同点是都要在前序位置（入栈前判断，判断是否入栈）写判定条件（一定要考虑好边界条件），在后面写的时候，哪怕判断条件重复，实际上也不会影响算法效率。</p>
+<p>通过选边还是选点，选择回溯或者DFS</p>
+<h3 id="非明显节点型"><a href="#非明显节点型" class="headerlink" title="非明显节点型"></a>非明显节点型</h3><h4 id="1-排列组合问题"><a href="#1-排列组合问题" class="headerlink" title="1.排列组合问题"></a>1.排列组合问题</h4><p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231008203914915.png" alt="image-20231008203914915"></p>
+<p><strong>边问题，回溯</strong></p>
+<p>求一个数组的全排列，这个要注意一点，vis标记与撤销，vis不能不撤销，那样会导致其他分支被剪掉，从而只会剩下一个排列。</p>
+<h4 id="2-表格型（棋盘型、迷宫型）"><a href="#2-表格型（棋盘型、迷宫型）" class="headerlink" title="2.表格型（棋盘型、迷宫型）"></a>2.表格型（棋盘型、迷宫型）</h4><p>典型：“N皇后”问题</p>
+<p>关键步骤：找到遍历逻辑（怎么遍历），至于皇后不能攻击、迷宫墙不能通过……这些问题是后期限制条件(if语句、剪枝)，前期不用管。</p>
+<p>遍历逻辑——&gt;转化为树形结构（图本身也算树形大类）</p>
+<p><strong>根节点为空，考虑回溯（抽象为边，边问题的根节点是空的）。</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231008210924883.png" alt="image-20231008210924883"></p>
+<p>N皇后一般思路：每行取一个皇后，这个皇后可以在该行的每个列（只要不在另一个皇后的攻击范围）——&gt; 后面加<code>if</code>限制条件。</p>
 
                 
             </div>
@@ -390,7 +419,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.liwuxuanplus.com/2023/10/07/gen-ju-shu-ju-gu-suan-shi-jian-fu-za-du/">https://www.liwuxuanplus.com/2023/10/07/gen-ju-shu-ju-gu-suan-shi-jian-fu-za-du/</a>
+                    <a href="https://www.liwuxuanplus.com/2023/10/10/sou-suo/">https://www.liwuxuanplus.com/2023/10/10/sou-suo/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -474,7 +503,7 @@
         repo: 'talk',
         owner: 'liwuxuan',
         admin: "liwuxuan",
-        id: '2023-10-07T12-43-12',
+        id: '2023-10-10T18-10-03',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -769,9 +798,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2023/10/10/sou-suo/">
                     <div class="card-image">
@@ -789,9 +819,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-10-10
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-10-10
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -800,6 +830,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -818,13 +849,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/10/04/vector-suo-yin-wen-ti/">
+                <a href="/2023/10/07/gen-ju-shu-ju-gu-suan-shi-jian-fu-za-du/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/liwuxuan/liwuxuan.github.io/medias/featureimages/16.jpg" class="responsive-img" alt="vector索引问题">
+                        <img src="https://cdn.jsdelivr.net/gh/liwuxuan/liwuxuan.github.io/medias/featureimages/23.jpg" class="responsive-img" alt="根据数据估算时间复杂度">
                         
-                        <span class="card-title">vector索引问题</span>
+                        <span class="card-title">根据数据估算时间复杂度</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -835,7 +866,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-10-04
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-10-07
                             </span>
                         <span class="publish-author">
                             
@@ -848,8 +879,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%98%93%E9%94%99%E7%82%B9/">
-                        <span class="chip bg-color">易错点</span>
+                    <a href="/tags/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/">
+                        <span class="chip bg-color">程序设计</span>
                     </a>
                     
                 </div>
