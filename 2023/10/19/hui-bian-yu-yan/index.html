@@ -4,8 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="OpenGL学习笔记, MySite">
-    <meta name="description" content="写在最前面，我的开发主要在VS2022上面，通过代码学程序，很多函数是不懂的。这个时候VS的快捷键F1就可以快速查看函数文档，很有用。（glut函数按F1查看不到）GLUT API, version 3 — GLUT API，版本3 (op">
+    <meta name="keywords" content="汇编语言, MySite">
+    <meta name="description" content="汇编语言
+通用寄存器AX、BX、CX、DX 通常用来存放一般性数据被称为通用寄存器（16位）
+由于8086初期是8位，为保证兼容性，这四个寄存器都可以分为两个独立的8位寄存器使用。
+​	AX可以分为AH和AL；
+​	BX可以分为BH和BL；">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +21,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>OpenGL学习笔记 | MySite</title>
+    <title>汇编语言 | MySite</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/liwuxuan/liwuxuan.github.io/favicon.png">
     
     <style>
@@ -280,12 +284,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/liwuxuan/liwuxuan.github.io/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/liwuxuan/liwuxuan.github.io/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">OpenGL学习笔记</h1>
+                    <h1 class="description center-align post-title">汇编语言</h1>
                 </div>
             </div>
         </div>
@@ -309,31 +313,14 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/OpenGL/">
-                                <span class="chip bg-color">OpenGL</span>
-                            </a>
-                        
-                            <a href="/tags/VS2022/">
-                                <span class="chip bg-color">VS2022</span>
-                            </a>
-                        
-                            <a href="/tags/C/">
-                                <span class="chip bg-color">C++</span>
+                            <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">
+                                <span class="chip bg-color">汇编语言</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/OpenGL/" class="post-category">
-                                OpenGL
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -342,7 +329,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-09-28
+                    2023-10-19
                 </div>
                 
 
@@ -353,7 +340,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    8 分
+                    6 分
                 </div>
                 
 
@@ -373,142 +360,103 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>写在最前面，我的开发主要在VS2022上面，通过代码学程序，很多函数是不懂的。这个时候<strong>VS的快捷键F1就可以快速查看函数文档，很有用。</strong>（glut函数按F1查看不到）<a target="_blank" rel="noopener" href="https://www.opengl.org/resources/libraries/glut/spec3/spec3.html">GLUT API, version 3 — GLUT API，版本3 (opengl.org)</a>这里是参考文档<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/374920616">opengl新手教程（通俗易懂） - 知乎 (zhihu.com)</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Wang_Dou_Dou_/article/details/121240714">OpenGL初学者入门——学习指南【共 9 篇文章】_opengl学习_一支王同学的博客-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://learnopengl.com/Getting-started/OpenGL">LearnOpenGL - OpenGL — 学习OpenGL- OpenGL</a></p>
-<p><a target="_blank" rel="noopener" href="https://learnopengl-cn.github.io/">主页 - LearnOpenGL CN (learnopengl-cn.github.io)</a></p>
-<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/dbc430ed349a4411abcf3efba7409c5f.png" alt="img"></p>
-<h5 id="以下是一些常用的OpenGL函数的清单，包括它们的用法和参数含义："><a href="#以下是一些常用的OpenGL函数的清单，包括它们的用法和参数含义：" class="headerlink" title="以下是一些常用的OpenGL函数的清单，包括它们的用法和参数含义："></a>以下是一些常用的OpenGL函数的清单，包括它们的用法和参数含义：</h5><h6 id="1-glClearColor-GLfloat-red-GLfloat-green-GLfloat-blue-GLfloat-alpha"><a href="#1-glClearColor-GLfloat-red-GLfloat-green-GLfloat-blue-GLfloat-alpha" class="headerlink" title="1. glClearColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)"></a>1. <strong>glClearColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)</strong></h6><ul>
-<li>用法：设置背景清除颜色。</li>
-<li>参数含义：<ul>
-<li><code>red</code>：红色分量，取值范围为0.0到1.0。</li>
-<li><code>green</code>：绿色分量，取值范围为0.0到1.0。</li>
-<li><code>blue</code>：蓝色分量，取值范围为0.0到1.0。</li>
-<li><code>alpha</code>：透明度分量，取值范围为0.0到1.0。</li>
-</ul>
-</li>
-</ul>
-<h6 id="2-glClear-GLbitfield-mask"><a href="#2-glClear-GLbitfield-mask" class="headerlink" title="2. glClear(GLbitfield mask)"></a>2. <strong>glClear(GLbitfield mask)</strong></h6><ul>
-<li>用法：清除指定的缓冲区。</li>
-<li>参数含义：<ul>
-<li><code>mask</code>：要清除的缓冲区，可以是<code>GL_COLOR_BUFFER_BIT</code>（颜色缓冲区）、<code>GL_DEPTH_BUFFER_BIT</code>（深度缓冲区）、<code>GL_STENCIL_BUFFER_BIT</code>（模板缓冲区）的组合。</li>
-</ul>
-</li>
-</ul>
-<h6 id="3-glMatrixMode-GLenum-mode"><a href="#3-glMatrixMode-GLenum-mode" class="headerlink" title="3. glMatrixMode(GLenum mode)"></a>3. <strong>glMatrixMode(GLenum mode)</strong></h6><ul>
-<li>用法：设置当前矩阵模式。</li>
-<li>参数含义：<ul>
-<li><code>mode</code>：矩阵模式，可以是<code>GL_MODELVIEW</code>（模型视图矩阵）、<code>GL_PROJECTION</code>（投影矩阵）、<code>GL_TEXTURE</code>（纹理矩阵）之一。</li>
-</ul>
-</li>
-</ul>
-<h6 id="4-glLoadIdentity"><a href="#4-glLoadIdentity" class="headerlink" title="4. glLoadIdentity()"></a>4. <strong>glLoadIdentity()</strong></h6><ul>
-<li>用法：将当前矩阵重置为单位矩阵。</li>
-</ul>
-<h6 id="5-gluOrtho2D-GLdouble-left-GLdouble-right-GLdouble-bottom-GLdouble-top"><a href="#5-gluOrtho2D-GLdouble-left-GLdouble-right-GLdouble-bottom-GLdouble-top" class="headerlink" title="5. gluOrtho2D(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top)"></a>5. <strong>gluOrtho2D(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top)</strong></h6><ul>
-<li>用法：设置正交投影矩阵。</li>
-<li>参数含义：<ul>
-<li><code>left</code>、<code>right</code>、<code>bottom</code>、<code>top</code>：视图体积的边界。</li>
-</ul>
-</li>
-</ul>
-<h6 id="6-glBegin-GLenum-mode-和-glEnd"><a href="#6-glBegin-GLenum-mode-和-glEnd" class="headerlink" title="6. glBegin(GLenum mode) 和 glEnd()"></a>6. <strong>glBegin(GLenum mode)</strong> 和 <strong>glEnd()</strong></h6><ul>
-<li>用法：定义要绘制的图元的起始和结束。</li>
-<li>参数含义：<ul>
-<li><code>mode</code>：绘制的图元类型，如<code>GL_POINTS</code>（点）、<code>GL_LINES</code>（线段）、<code>GL_TRIANGLES</code>（三角形）等。</li>
-</ul>
-</li>
-</ul>
-<h6 id="7-glVertex2f-GLfloat-x-GLfloat-y"><a href="#7-glVertex2f-GLfloat-x-GLfloat-y" class="headerlink" title="7.  glVertex2f(GLfloat x, GLfloat y)"></a>7.  <strong>glVertex2f(GLfloat x, GLfloat y)</strong></h6><ul>
-<li>用法：指定一个顶点坐标。</li>
-<li>参数含义：<ul>
-<li><code>x</code>、<code>y</code>：顶点的x和y坐标。</li>
-</ul>
-</li>
-</ul>
-<h6 id="8-glColor3f-GLfloat-red-GLfloat-green-GLfloat-blue"><a href="#8-glColor3f-GLfloat-red-GLfloat-green-GLfloat-blue" class="headerlink" title="8. glColor3f(GLfloat red, GLfloat green, GLfloat blue)"></a>8. <strong>glColor3f(GLfloat red, GLfloat green, GLfloat blue)</strong></h6><ul>
-<li>用法：设置当前颜色。</li>
-<li>参数含义：<ul>
-<li><code>red</code>、<code>green</code>、<code>blue</code>：颜色的红、绿、蓝分量，取值范围为0.0到1.0。</li>
-</ul>
-</li>
-</ul>
-<h6 id="9-glPushMatrix-和-glPopMatrix"><a href="#9-glPushMatrix-和-glPopMatrix" class="headerlink" title="9. glPushMatrix() 和 glPopMatrix()"></a>9. <strong>glPushMatrix()</strong> 和 <strong>glPopMatrix()</strong></h6><ul>
-<li>用法：保存和恢复当前矩阵状态。</li>
-</ul>
-<h6 id="10-glTranslatef-GLfloat-x-GLfloat-y-GLfloat-z"><a href="#10-glTranslatef-GLfloat-x-GLfloat-y-GLfloat-z" class="headerlink" title="10. glTranslatef(GLfloat x, GLfloat y, GLfloat z)"></a>10. <strong>glTranslatef(GLfloat x, GLfloat y, GLfloat z)</strong></h6><ul>
-<li>用法：执行平移变换。</li>
-<li>参数含义：<ul>
-<li><code>x</code>、<code>y</code>、<code>z</code>：平移的距离。</li>
-</ul>
-</li>
-</ul>
-<h6 id="11-glRotatef-GLfloat-angle-GLfloat-x-GLfloat-y-GLfloat-z"><a href="#11-glRotatef-GLfloat-angle-GLfloat-x-GLfloat-y-GLfloat-z" class="headerlink" title="11. glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)"></a>11. <strong>glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)</strong></h6><ul>
-<li>用法：执行旋转变换。</li>
-<li>参数含义：<ul>
-<li><code>angle</code>：旋转角度（度）。</li>
-<li><code>x</code>、<code>y</code>、<code>z</code>：旋转轴的方向。</li>
-</ul>
-</li>
-</ul>
-<h6 id="12-glViewport-GLint-x-GLint-y-GLsizei-width-GLsizei-height"><a href="#12-glViewport-GLint-x-GLint-y-GLsizei-width-GLsizei-height" class="headerlink" title="12. glViewport(GLint x, GLint y, GLsizei width, GLsizei height)"></a>12. <strong>glViewport(GLint x, GLint y, GLsizei width, GLsizei height)</strong></h6><ul>
-<li>用法：设置视口。</li>
-<li>参数含义：<ul>
-<li><code>x</code>、<code>y</code>：视口的左下角坐标。</li>
-<li><code>width</code>、<code>height</code>：视口的宽度和高度。</li>
-</ul>
-</li>
-</ul>
-<p>这些函数是OpenGL中的一些基本函数，用于设置绘图状态、定义几何图元、执行变换和控制渲染行为。通过组合和调用这些函数，可以创建各种复杂的图形效果。</p>
-<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;GL/glut.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 窗口宽度和高度</span></span><br><span class="line"><span class="type">int</span> windowWidth = <span class="number">800</span>;</span><br><span class="line"><span class="type">int</span> windowHeight = <span class="number">600</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span> </span>{</span><br><span class="line">    <span class="built_in">glClearColor</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>); <span class="comment">// 设置背景色为黑色</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 渲染函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">display</span><span class="params">()</span> </span>{</span><br><span class="line">    <span class="built_in">glClear</span>(GL_COLOR_BUFFER_BIT); <span class="comment">// 清除颜色缓冲区</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 绘制一个彩色三角形</span></span><br><span class="line">    <span class="built_in">glBegin</span>(GL_TRIANGLES);<span class="comment">//画点画线什么的都要用这里</span></span><br><span class="line">    <span class="built_in">glColor3f</span>(<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>); <span class="comment">// 设置当前绘制颜色为红色</span></span><br><span class="line">    <span class="built_in">glVertex2f</span>(<span class="number">0.0</span>, <span class="number">0.5</span>); <span class="comment">// 第一个顶点坐标</span></span><br><span class="line">    <span class="built_in">glColor3f</span>(<span class="number">0.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>); <span class="comment">// 设置当前绘制颜色为绿色</span></span><br><span class="line">    <span class="built_in">glVertex2f</span>(<span class="number">-0.5</span>, <span class="number">-0.5</span>); <span class="comment">// 第二个顶点坐标</span></span><br><span class="line">    <span class="built_in">glColor3f</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>); <span class="comment">// 设置当前绘制颜色为蓝色</span></span><br><span class="line">    <span class="built_in">glVertex2f</span>(<span class="number">0.5</span>, <span class="number">-0.5</span>); <span class="comment">// 第三个顶点坐标</span></span><br><span class="line">    <span class="built_in">glEnd</span>();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">glFlush</span>(); <span class="comment">// 刷新缓冲区，绘制图形</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 窗口大小变化回调函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">reshape</span><span class="params">(<span class="type">int</span> width, <span class="type">int</span> height)</span> </span>{</span><br><span class="line">    <span class="built_in">glViewport</span>(<span class="number">0</span>, <span class="number">0</span>, width, height); <span class="comment">// 设置视口，充满整个窗口</span></span><br><span class="line">    <span class="built_in">glMatrixMode</span>(GL_PROJECTION);</span><br><span class="line">    <span class="built_in">glLoadIdentity</span>();<span class="comment">//glLoadIdentity() 是OpenGL中的一个函数，用于将当前的矩阵重置为单位矩阵。单位矩阵是一个特殊的矩阵，对于矩阵乘法操作，它是一个“中性元素”。当你调用 glLoadIdentity() 时，它会将当前矩阵设置为单位矩阵，即没有任何变换或投影应用在对象上。</span></span><br><span class="line">    <span class="built_in">gluOrtho2D</span>(<span class="number">-1.0</span>, <span class="number">1.0</span>, <span class="number">-1.0</span>, <span class="number">1.0</span>); <span class="comment">// 设置正交投影矩阵，范围为[-1, 1]在X和Y轴上</span></span><br><span class="line">    <span class="built_in">glMatrixMode</span>(GL_MODELVIEW);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>** argv)</span> </span>{</span><br><span class="line">    <span class="built_in">glutInit</span>(&amp;argc, argv); <span class="comment">// 初始化GLUT</span></span><br><span class="line">    <span class="built_in">glutInitDisplayMode</span>(GLUT_SINGLE | GLUT_RGBA); <span class="comment">// 设置显示模式，单缓冲区</span></span><br><span class="line">    <span class="built_in">glutInitWindowSize</span>(windowWidth, windowHeight); <span class="comment">// 设置窗口尺寸</span></span><br><span class="line">    <span class="built_in">glutCreateWindow</span>(<span class="string">"OpenGL Template"</span>); <span class="comment">// 创建窗口并设置标题</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">init</span>(); <span class="comment">// 初始化OpenGL</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">glutDisplayFunc</span>(display); <span class="comment">// 设置渲染函数</span></span><br><span class="line">    <span class="built_in">glutReshapeFunc</span>(reshape); <span class="comment">// 设置窗口大小变化回调函数</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">glutMainLoop</span>(); <span class="comment">// 进入OpenGL主循环，等待用户交互和渲染</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/aa941096979/article/details/50843596">OpenGL 解析glBegin()_Hi_乌龟的博客-CSDN博客</a>主要是看mode</p>
-<p>glut参考链接[<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39377889/article/details/126946503">OpenGL笔记]glut入门（1）_glut opengl_Binarydog_Lee的博客-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/deniece1/article/details/102642934">GLUT及其函数的用法整理_glutcreatewindow用法_deniece1的博客-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/2303_77480410/article/details/130011521">opengl-glut(内含总结的学习资源)_glut文档_Osatnb.c的博客-CSDN博客</a></p>
-<p>glut现在已经不是一个流行的窗口管理选择，或者说已经被弃用，但是在示例中还是经常能看见。</p>
-<p>经过比较，感觉还是glut更方便。(⊙o⊙)…</p>
-<p>由于不会深入研究openGL，后面统一使用glut</p>
-<h3 id="glutSwapBuffers-与双缓冲区"><a href="#glutSwapBuffers-与双缓冲区" class="headerlink" title="glutSwapBuffers 与双缓冲区"></a><code>glutSwapBuffers</code> 与双缓冲区</h3><p><code>glutSwapBuffers</code> 是 GLUT（OpenGL Utility Toolkit）库中的一个函数，通常在使用双缓冲区（double buffering）时使用。它用于在绘制图形完成后，交换前后缓冲区的内容，以实现平滑的图形更新。下面是对 <code>glutSwapBuffers</code> 函数的中文详解：</p>
-<ol>
-<li><p><strong>缓冲区（Buffer）</strong>：在计算机图形中，缓冲区是内存中的特定区域，用于存储图像数据。常见的缓冲区类型包括前缓冲区（front buffer）和后缓冲区（back buffer）。</p>
-</li>
-<li><p><strong>双缓冲区（Double Buffering）</strong>：双缓冲区是一种图形绘制技术，它使用两个缓冲区来减少屏幕闪烁和提高图形渲染的效果。一个缓冲区用于绘制图像（后缓冲区），另一个缓冲区用于显示（前缓冲区）。这允许在后缓冲区中绘制图像，然后一次性将其显示在屏幕上，减少了用户可见的渲染过程。</p>
-</li>
-<li><p><strong>glutSwapBuffers 函数</strong>：<code>glutSwapBuffers</code> 是 GLUT 库提供的函数之一，它用于切换前后缓冲区，即将后缓冲区的内容复制到前缓冲区，使得用户能够看到刚刚绘制的图像。</p>
-</li>
-<li><p><strong>使用场景</strong>：<code>glutSwapBuffers</code> 通常在绘制完成后（例如，在 <code>display</code> 回调函数中）调用，以实现图像的平滑更新。在单缓冲区模式下，你会直接绘制在屏幕上，这可能会导致图像闪烁和不稳定。双缓冲区允许你预先绘制一个完整的图像，然后在用户看到之前交换缓冲区，以避免这些问题。</p>
-</li>
-<li><p><strong>使用示例</strong>：通常的用法如下：</p>
-<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glutSwapBuffers</span>();</span><br></pre></td></tr></tbody></table></figure>
-
-<p>这会将后缓冲区的内容交换到前缓冲区，使绘制的图形变得可见。</p>
-</li>
-</ol>
-<p>总之，<code>glutSwapBuffers</code> 函数是用于在双缓冲区中实现平滑图形更新的关键函数。通过在绘制完成后调用它，你可以确保用户看到的图形是完整和稳定的，减少了屏幕闪烁和不完整图像的问题。这在交互式图形应用程序和游戏开发中特别有用。</p>
-<h3 id="什么时候用glutSwapBuffers，什么时候用glFlush？"><a href="#什么时候用glutSwapBuffers，什么时候用glFlush？" class="headerlink" title="什么时候用glutSwapBuffers，什么时候用glFlush？"></a>什么时候用<code>glutSwapBuffers</code>，什么时候用<code>glFlush</code>？</h3><p><code>glutSwapBuffers</code> 和 <code>glFlush</code> 都是用于刷新绘图窗口的函数，但它们的使用场景和行为略有不同。</p>
-<ol>
-<li><p><strong>glutSwapBuffers</strong>：</p>
-<ul>
-<li><strong>双缓冲区</strong>：<code>glutSwapBuffers</code> 主要用于双缓冲区渲染模式。在双缓冲区中，你绘制图像在后缓冲区中，然后使用 <code>glutSwapBuffers</code> 将后缓冲区的内容切换到前缓冲区，以使其在屏幕上可见。</li>
-<li><strong>典型用途</strong>：通常，在使用双缓冲区时，<font color="orange">在绘制完成后，你会调用 <code>glutSwapBuffers</code> 来刷新窗口，以显示绘制的图像</font>。</li>
-</ul>
-</li>
-<li><p><strong>glFlush</strong>：</p>
-<ul>
-<li><strong>单缓冲区</strong>：<code>glFlush</code> 适用于单缓冲区渲染模式，其中你直接绘制到前缓冲区，而不涉及后缓冲区。**<font color="green">在单缓冲区模式中，图像将立即绘制到屏幕上。</font>**</li>
-<li><strong>典型用途</strong>：<code>glFlush</code> 通常用于单缓冲区模式，当你需要立即将图像绘制到屏幕上时，可以使用 <code>glFlush</code>。它会立即刷新图形缓冲区。</li>
-</ul>
-</li>
-</ol>
-<p><strong>选择使用哪一个函数取决于你的渲染需求</strong>：</p>
-<ul>
-<li>如果你使用双缓冲区，通常使用 <code>glutSwapBuffers</code> 以确保绘制的图像在用户可见之前被交换到前缓冲区。</li>
-<li>如果你使用单缓冲区或者需要实时渲染效果，你可以使用 <code>glFlush</code> 以立即将图像绘制到屏幕上。</li>
-</ul>
-<p>请根据你的应用程序的渲染模式和性能要求来选择合适的函数。在许多情况下，使用双缓冲区和 <code>glutSwapBuffers</code> 会提供更流畅的图形更新，特别是对于需要避免图像闪烁的应用程序。</p>
-<h3 id="怎么确定是单缓冲区还是双缓冲区？"><a href="#怎么确定是单缓冲区还是双缓冲区？" class="headerlink" title="怎么确定是单缓冲区还是双缓冲区？"></a>怎么确定是单缓冲区还是双缓冲区？</h3><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glutInitDisplayMode</span>(GLUT_RGB | GLUT_SINGLE);<span class="comment">//单缓冲区</span></span><br><span class="line"><span class="built_in">glutInitDisplayMode</span>(GLUT_RGB | GLUT_DOUBLE);<span class="comment">//双缓冲区</span></span><br><span class="line"><span class="comment">//这个通常写在main函数里面</span></span><br></pre></td></tr></tbody></table></figure>
-
+                <h1 id="汇编语言"><a href="#汇编语言" class="headerlink" title="汇编语言"></a>汇编语言</h1><p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231017141209086.png" alt="image-20231017141209086"></p>
+<h2 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h2><p><strong>AX、BX、CX、DX 通常用来存放一般性数据被称为通用寄存器（16位）</strong></p>
+<p>由于8086初期是8位，为保证兼容性，这四个寄存器都可以分为两个独立的8位寄存器使用。</p>
+<p>​	AX可以分为AH和AL；</p>
+<p>​	BX可以分为BH和BL；</p>
+<p>​	CX可以分为CH和CL；</p>
+<p>​	DX可以分为DH和DL。</p>
+<p>AX的低8位（0位<del>7位）构成了AL寄存器，高8位（8位</del>15位）构成了AH寄存器</p>
+<p>段地址×16（也就是二进制左移4位）+偏移地址=物理地址，物理地址20位，段地址16位</p>
+<p>内存没有分段，只是CPU用段地址记录物理地址</p>
+<p>段的起始地址（不是段地址，段地址是去掉末位）必然是xxxx0H（16的倍数），偏移地址16位，所以段长度最多64K</p>
+<h2 id="段寄存器"><a href="#段寄存器" class="headerlink" title="段寄存器"></a>段寄存器</h2><p>段寄存器就是提供段地址的</p>
+<p>8086CPU有4个段寄存器：</p>
+<p>​		 CS、DS、SS、ES</p>
+<p>当8086CPU要访问内存时，由这4个段寄存器提供内存单元的段地址</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231018224509342.png" alt="image-20231018224509342"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231018225526532.png" alt="image-20231018225526532"></p>
+<h3 id="CS和IP"><a href="#CS和IP" class="headerlink" title="CS和IP"></a>CS和IP</h3><p><strong>CS和IP是8086CPU中最关键的寄存器，它们指示了CPU当前要读取指令的地址</strong></p>
+<p>​	CS为代码段寄存器</p>
+<p>​	IP为指令指针寄存器</p>
+<table>
+<thead>
+<tr>
+<th align="center">8086PC工作过程的简要描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">（1）<strong>从CS:IP指向内存单元读取指令</strong>，读取的指令进入指令缓冲器；<br>（2）IP = IP + 所读取指令的长度，从而指向下一条指令；<br>（3）执行指令。 转到步骤 （1），重复这个过程。</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>tip:</p>
+<p>在 8086CPU 加电启动或复位后（ 即 CPU刚开始工作时）CS和IP被设置为CS=FFFFH，IP=0000H，即在8086PC机刚启动时，CPU从内存FFFF0H单元中读取指令执行，<strong>FFFF0H单元中的指令是8086PC机开机后执行的第一条指令</strong></p>
+</blockquote>
+<p>CPU将CS:IP指向的内存单元中的内容看作指令</p>
+<p>怎么修改CS:IP?</p>
+<p>mov指令不能用于设置CS、IP的值，   8086CPU没有提供这样的功能。8086修改CS:IP的指令是转移指令（jmp等）</p>
+<p>8086机中，任意时刻，CPU将CS:IP指向的内容当作指令执行。若有内存被CPU访问，则该内存一定被CS:IP指向过</p>
+<h3 id="DS"><a href="#DS" class="headerlink" title="DS"></a>DS</h3><p>执行指令时，8086CPU自动取DS中的数据为内存单元的段地址</p>
+<p>​		mov [0],ax即将ax寄存器数据存到DS:0位置</p>
+<p>8086CPU中有一个 DS寄存器，通常用来存放<strong>要访问的数据的段地址</strong>。</p>
+<p>mov指令的格式：      </p>
+<p>​			mov 寄存器名，[内存单元地址]</p>
+<p>“[…]”表示一个内存单元， “[…]”中的数字表示内存单元的偏移地址。</p>
+<p><font color="red"><strong>8086CPU不支持将数据直接送入段寄存器的操作</strong></font></p>
+<p><strong>数据➡️一般的寄存器➡️段寄存器</strong></p>
+<h2 id="和-的应用"><a href="#和-的应用" class="headerlink" title="[]和()的应用"></a>[]和()的应用</h2><p>[bx]表示一个内存单元，它的偏移地址在bx中，比如下面的指令：mov ax,[bx]</p>
+<p>ax中的内容为0010H，我们可以这样来描述：(ax)=0010H； </p>
+<p>也可以这样说，[]一般出现在指令里面&lt;偏移地址&gt;，()一般出现在计算里面&lt;内容数据&gt;</p>
+<table>
+<thead>
+<tr>
+<th align="left">mov [bx],ax</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">功能：<br>bx中存放的数据作为一个偏移地址EA，段地址SA默认在ds中，将ax中的数据送入内存SA:EA处。  即：(ds *16 +(bx))  =  (ax)。</td>
+</tr>
+</tbody></table>
+<h2 id="SI和CI"><a href="#SI和CI" class="headerlink" title="SI和CI"></a>SI和CI</h2><p>SI和DI是8086CPU中和bx功能相近的寄存器，SI和DI不能够分成两个8 位寄存器来使用</p>
+<p>一般默认SI源寄存器，DI目的寄存器</p>
+<p>在“[…]” 中，这4个寄存器（bx、bp、si、di）可以单个出现，或只能以四种组合出现：bx和si、bx和di、bp和si、bp和di</p>
+<p>只要在[…]中使用寄存器bp，而指令中没有显性的给出段地址，段地址就默认在ss中</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231016230952500.png" alt="image-20231016230952500"></p>
+<h2 id="特殊寄存器"><a href="#特殊寄存器" class="headerlink" title="特殊寄存器"></a>特殊寄存器</h2><p><strong>IP</strong> 指定将IP用于指令地址记录，即Instruction Pointer。每次取指后都自增1。</p>
+<p><strong>FLAGS</strong> 指定将FLAGS用作程序状态指示，也即PSW（Program Status Word）。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231018224328803.png" alt="image-20231018224328803"></p>
+<h2 id="指令系统"><a href="#指令系统" class="headerlink" title="指令系统"></a>指令系统</h2><p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231018230055341.png" alt="image-20231018230055341"></p>
+<h3 id="PTR什么时候用？"><a href="#PTR什么时候用？" class="headerlink" title="PTR什么时候用？"></a><code>PTR</code>什么时候用？</h3><p>有寄存器时不用，无寄存器（包含【bx】）时要使用，防止源操作数和目的操作数位数不一致</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36561697/article/details/80698875">https://blog.csdn.net/qq_36561697/article/details/80698875</a></p>
+<h2 id="寻址方式"><a href="#寻址方式" class="headerlink" title="寻址方式"></a>寻址方式</h2><h3 id="1-立即寻址"><a href="#1-立即寻址" class="headerlink" title="1.立即寻址"></a>1.立即寻址</h3><p>操作数直接存放在指令中，立即寻址方式用来表示常数，它经常用于给寄存器赋初值，并且只能用于源操作数字段，不能用于目的操作数字段，且源操作数 长度 应与目的操作数 长度一致。</p>
+<p><strong>例子：MOV AX, 3064H</strong> </p>
+<h3 id="2-寄存器寻址"><a href="#2-寄存器寻址" class="headerlink" title="2.寄存器寻址"></a>2.寄存器寻址</h3><p>操作数 在寄存器中，指令指定寄存器号。 </p>
+<p>对于16位操作数，寄存器可以是AX,BX,CX,DX,SI,DI,SP和BP；</p>
+<p>对于8位操作数，寄存器可以是AL,AH, BL, BH, CL, CH, DL,DH；</p>
+<p><strong>例子：MOV AX, BX</strong> </p>
+<h3 id="3-直接寻址"><a href="#3-直接寻址" class="headerlink" title="3.直接寻址"></a>3.直接寻址</h3><p>操作数的有效地址只包含位移量一种成分(位移量（displacement)是存放在指令中的一个 8位、16位或 32位的数，但它不是立即数，而是一个地址。区别在于<strong>位移量加[	]</strong>	)，其值就存放在代码段中指令的操作码之后，位移量的值即操作数的有效地址</p>
+<p><strong>例子：MOV AX,[2000H]</strong></p>
+<h3 id="4-寄存器间接寻址"><a href="#4-寄存器间接寻址" class="headerlink" title="4.寄存器间接寻址"></a>4.寄存器间接寻址</h3><p>操作数的有效地址只包含基址寄存器内容或变址寄存器内容一种成分。 因此，<strong>有效地址就在某个寄存器中</strong>，而<strong>操作数则在存储器</strong>中</p>
+<p><strong>例子：MOV AX，[BX]</strong></p>
+<p>没有特殊说明（段跨越前缀），默认段寄存器为DS（BP和SP的时候默认是SS）</p>
+<p>假设（DS）=2000H，（BX）=1000H，物理地址EA=（DS）&lt;&lt;4+(BX)=21000H</p>
+<p>则(AX)=50A0H，<strong>一定要注意EA是地址，操作数是（EA）</strong>，<strong>AX赋值是操作数赋值</strong>，EA只是用来寻址的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231019223728313.png" alt="image-20231019223728313"></p>
+<h3 id="5-寄存器相对寻址"><a href="#5-寄存器相对寻址" class="headerlink" title="5.寄存器相对寻址"></a>5.寄存器相对寻址</h3><p>操作数的有效地址为基址寄存器或变址寄存器的内容和指令中指定的位移量之和， 所以有效地址由两种成分组成。</p>
+<p><strong>例子：MOV AX, COUNT[SI]</strong> （也可表示为<strong>MOV AX, [COUNT+SI])</strong>	其中<strong>COUNT为16位位移量的符号地址。</strong></p>
+<p>如果 (DS) = 3000H, （SI）= 2000H, COUNT= 3000H</p>
+<p>则物理地址EA＝30000+2000+3000= 35000H </p>
+<h3 id="6-基址变址寻址"><a href="#6-基址变址寻址" class="headerlink" title="6.基址变址寻址"></a>6.基址变址寻址</h3><p>操作数的有效地址是一个基址寄存器和一个变址寄存器的内容之和，所以有效地址由两种成分组成</p>
+<p><strong>例子：MOV AX, [BX] [DI] （或写为 ：MOV AX, [BX+ DI]	)</strong></p>
+<p>如(DS)= 2100H, （BX) = 0158H, (DI)= 10A5H<br>则EA= 0158+10A5= 11FDH，物理地址＝21000+11FD= 221FDH </p>
+<p>执行结果(AX)=1234H</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231019225016657.png" alt="image-20231019225016657"></p>
+<h3 id="7-相对基址变址寻址"><a href="#7-相对基址变址寻址" class="headerlink" title="7.相对基址变址寻址"></a>7.相对基址变址寻址</h3><p>操作数的有效地址是一个基址寄存器与一个变址寄存器的内容和指令中指定的位移量之和，所以有效地址由三种 成分组成。</p>
+<p><strong>例子：MOV MASK[BX] [SI]（也可写成MOV AX, MASK[BX+SI]或MOV AX, [MASK+BX+ SI])</strong></p>
+<p>如（DS)= 3000H, (BX)= 2000H, (SI）= 1000H，MASK= 0250H, </p>
+<p>则 物理地址<strong>EA＝（DS)&lt;&lt;4	+(BX)+(SI）+MASK</strong><br>= 30000+2000+1000+0250 = 33250H<br>执行结果(AX)= 1234H。<br><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231019225646835.png" alt="image-20231019225646835"></p>
 
                 
             </div>
@@ -535,7 +483,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.liwuxuanplus.com/2023/09/28/opengl-xue-xi-bi-ji/">https://www.liwuxuanplus.com/2023/09/28/opengl-xue-xi-bi-ji/</a>
+                    <a href="https://www.liwuxuanplus.com/2023/10/19/hui-bian-yu-yan/">https://www.liwuxuanplus.com/2023/10/19/hui-bian-yu-yan/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -573,16 +521,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/OpenGL/">
-                                    <span class="chip bg-color">OpenGL</span>
-                                </a>
-                            
-                                <a href="/tags/VS2022/">
-                                    <span class="chip bg-color">VS2022</span>
-                                </a>
-                            
-                                <a href="/tags/C/">
-                                    <span class="chip bg-color">C++</span>
+                                <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">
+                                    <span class="chip bg-color">汇编语言</span>
                                 </a>
                             
                         </div>
@@ -895,17 +835,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2023/09/28/python-ji-chu-xue-xi-wu-kuang-jia/">
+                <a href="/2023/10/19/hui-bian-yu-yan/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/liwuxuan/liwuxuan.github.io/medias/featureimages/5.jpg" class="responsive-img" alt="python基础学习（无框架）">
+                        <img src="https://cdn.jsdelivr.net/gh/liwuxuan/liwuxuan.github.io/medias/featureimages/2.jpg" class="responsive-img" alt="汇编语言">
                         
-                        <span class="card-title">python基础学习（无框架）</span>
+                        <span class="card-title">汇编语言</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -915,9 +856,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-09-28
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-10-19
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -926,11 +867,12 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/python/">
-                        <span class="chip bg-color">python</span>
+                    <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">
+                        <span class="chip bg-color">汇编语言</span>
                     </a>
                     
                 </div>
@@ -944,13 +886,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/09/27/hello-world/">
+                <a href="/2023/10/10/sou-suo/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/liwuxuan/liwuxuan.github.io/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="https://cdn.jsdelivr.net/gh/liwuxuan/liwuxuan.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="搜索">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">搜索</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -961,16 +903,12 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-09-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-10-10
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/others/" class="post-category">
-                                    others
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            liwuxuan
                             
                         </span>
                     </div>
@@ -978,8 +916,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%9D%82%E9%A1%B9/">
-                        <span class="chip bg-color">杂项</span>
+                    <a href="/tags/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/">
+                        <span class="chip bg-color">程序设计</span>
                     </a>
                     
                 </div>

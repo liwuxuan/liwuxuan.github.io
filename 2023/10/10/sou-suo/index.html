@@ -5,8 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="搜索, MySite">
-    <meta name="description" content="BFS适用于需要找到最短路径或距离起点最近的解决方案的问题，而DFS适用于需要深度探索或搜索所有可能解决方案的问题。
-BFS通常只用来找一个解决方案，DFS用来找所有解决方案。BFS当然可以搜索所有解决方案，而且时间复杂度跟DFS相同，但是">
+    <meta name="description" content="https://blog.csdn.net/weixin_43590232/article/details/104735102
+https://stackoverflow.com/questions/3332947/what-are-the">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -357,7 +357,9 @@ BFS通常只用来找一个解决方案，DFS用来找所有解决方案。BFS�
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><strong>BFS适用于需要找到最短路径或距离起点最近的解决方案的问题，而DFS适用于需要深度探索或搜索所有可能解决方案的问题。</strong></p>
+                <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43590232/article/details/104735102">https://blog.csdn.net/weixin_43590232/article/details/104735102</a></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/3332947/what-are-the-practical-factors-to-consider-when-choosing-between-depth-first-sea">https://stackoverflow.com/questions/3332947/what-are-the-practical-factors-to-consider-when-choosing-between-depth-first-sea</a></p>
+<p><strong>BFS适用于需要找到最短路径或距离起点最近的解决方案的问题，而DFS适用于需要深度探索或搜索所有可能解决方案的问题。</strong></p>
 <p><strong>BFS通常只用来找一个解决方案，DFS用来找所有解决方案。</strong>BFS当然可以搜索所有解决方案，而且时间复杂度跟DFS相同，但是BFS的空间复杂度比DFS高太多了。</p>
 <p>BFS和DFS的相邻点 有的时候很明显，有的时候不明显，需要自己总结一下。在做CSP题时，基本上没有明显的节点，都是需要抽象出来树形结构的</p>
 <p><strong>做题第一步，纸上写出树形结构，分别考虑边和点。边考虑回溯，点考虑BFS和DFS。一定要考虑记忆化搜索和剪枝，不然一般都会超时。</strong></p>
@@ -393,6 +395,9 @@ BFS通常只用来找一个解决方案，DFS用来找所有解决方案。BFS�
 <p><strong>根节点为空，考虑回溯（抽象为边，边问题的根节点是空的）。</strong></p>
 <p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231008210924883.png" alt="image-20231008210924883"></p>
 <p>N皇后一般思路：每行取一个皇后，这个皇后可以在该行的每个列（只要不在另一个皇后的攻击范围）——&gt; 后面加<code>if</code>限制条件。</p>
+<p> <strong>在宽度优先和深度优先搜索里面，我们都是根据搜索的顺序依次进行搜索，可以称为盲目搜索，搜索效率非常低。</strong></p>
+<p>而启发式搜索则大大提高了搜索效率，但启发式搜索可能很繁琐</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/isguxing/p/9800490.html">https://www.cnblogs.com/isguxing/p/9800490.html</a></p>
 
                 
             </div>
@@ -771,18 +776,17 @@ BFS通常只用来找一个解决方案，DFS用来找所有解决方案。BFS�
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/10/10/sou-suo/">
+                <a href="/2023/10/19/hui-bian-yu-yan/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/liwuxuan/liwuxuan.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="搜索">
+                        <img src="https://cdn.jsdelivr.net/gh/liwuxuan/liwuxuan.github.io/medias/featureimages/2.jpg" class="responsive-img" alt="汇编语言">
                         
-                        <span class="card-title">搜索</span>
+                        <span class="card-title">汇编语言</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -792,9 +796,9 @@ BFS通常只用来找一个解决方案，DFS用来找所有解决方案。BFS�
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-10-10
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-10-19
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -803,12 +807,11 @@ BFS通常只用来找一个解决方案，DFS用来找所有解决方案。BFS�
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/">
-                        <span class="chip bg-color">程序设计</span>
+                    <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">
+                        <span class="chip bg-color">汇编语言</span>
                     </a>
                     
                 </div>
