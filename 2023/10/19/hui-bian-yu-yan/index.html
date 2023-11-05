@@ -5,11 +5,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="汇编语言, MySite">
-    <meta name="description" content="汇编语言
-通用寄存器AX、BX、CX、DX 通常用来存放一般性数据被称为通用寄存器（16位）
-由于8086初期是8位，为保证兼容性，这四个寄存器都可以分为两个独立的8位寄存器使用。
-​	AX可以分为AH和AL；
-​	BX可以分为BH和BL；">
+    <meta name="description" content="汇编语言8086的字节和字8086一个字节是8位（在哪里都不会变），但是8086的一个字是16位，也就是两个字节
+存储方式注意：默认小端存储，低位低放，高位高放
+指令格式
+操作数源操作数与目的操作数字长一致。
+ 任何操作数不能是IP、FLA">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -340,7 +340,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    7 分
                 </div>
                 
 
@@ -360,8 +360,14 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="汇编语言"><a href="#汇编语言" class="headerlink" title="汇编语言"></a>汇编语言</h1><p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231017141209086.png" alt="image-20231017141209086"></p>
-<h2 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h2><p><strong>AX、BX、CX、DX 通常用来存放一般性数据被称为通用寄存器（16位）</strong></p>
+                <h1 id="汇编语言"><a href="#汇编语言" class="headerlink" title="汇编语言"></a>汇编语言</h1><h3 id="8086的字节和字"><a href="#8086的字节和字" class="headerlink" title="8086的字节和字"></a>8086的字节和字</h3><p>8086一个字节是8位（在哪里都不会变），但是8086的一个字是16位，也就是两个字节</p>
+<h3 id="存储方式"><a href="#存储方式" class="headerlink" title="存储方式"></a>存储方式</h3><p>注意：默认小端存储，低位低放，高位高放</p>
+<h3 id="指令格式"><a href="#指令格式" class="headerlink" title="指令格式"></a>指令格式</h3><p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231104213821128.png" alt="image-20231104213821128"></p>
+<h3 id="操作数"><a href="#操作数" class="headerlink" title="操作数"></a>操作数</h3><p>源操作数与目的操作数字长一致。</p>
+<p> 任何操作数不能是IP、FLAGS，目的操作数不能是CS。（有专用指令）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231104214357160.png" alt="image-20231104214357160"></p>
+<h2 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h2><p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231017141209086.png" alt="image-20231017141209086"></p>
+<p><strong>AX、BX、CX、DX 通常用来存放一般性数据被称为通用寄存器（16位）</strong></p>
 <p>由于8086初期是8位，为保证兼容性，这四个寄存器都可以分为两个独立的8位寄存器使用。</p>
 <p>​	AX可以分为AH和AL；</p>
 <p>​	BX可以分为BH和BL；</p>
@@ -406,7 +412,7 @@
 <p>“[…]”表示一个内存单元， “[…]”中的数字表示内存单元的偏移地址。</p>
 <p><font color="red"><strong>8086CPU不支持将数据直接送入段寄存器的操作</strong></font></p>
 <p><strong>数据➡️一般的寄存器➡️段寄存器</strong></p>
-<h2 id="和-的应用"><a href="#和-的应用" class="headerlink" title="[]和()的应用"></a>[]和()的应用</h2><p>[bx]表示一个内存单元，它的偏移地址在bx中，比如下面的指令：mov ax,[bx]</p>
+<h2 id="和-的应用"><a href="#和-的应用" class="headerlink" title="[]和()的应用"></a>[]和()的应用</h2><p>[bx]表示一个内存单元（存储器操作数），它的偏移地址在bx中，比如下面的指令：mov ax,[bx]</p>
 <p>ax中的内容为0010H，我们可以这样来描述：(ax)=0010H； </p>
 <p>也可以这样说，[]一般出现在指令里面&lt;偏移地址&gt;，()一般出现在计算里面&lt;内容数据&gt;</p>
 <table>
@@ -424,11 +430,12 @@
 <p>在“[…]” 中，这4个寄存器（bx、bp、si、di）可以单个出现，或只能以四种组合出现：bx和si、bx和di、bp和si、bp和di</p>
 <p>只要在[…]中使用寄存器bp，而指令中没有显性的给出段地址，段地址就默认在ss中</p>
 <p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231016230952500.png" alt="image-20231016230952500"></p>
-<h2 id="特殊寄存器"><a href="#特殊寄存器" class="headerlink" title="特殊寄存器"></a>特殊寄存器</h2><p><strong>IP</strong> 指定将IP用于指令地址记录，即Instruction Pointer。每次取指后都自增1。</p>
+<h2 id="控制寄存器（IP和FLAGS）"><a href="#控制寄存器（IP和FLAGS）" class="headerlink" title="控制寄存器（IP和FLAGS）"></a>控制寄存器（IP和FLAGS）</h2><p><strong>IP</strong> 指定将IP用于指令地址记录，即Instruction Pointer。每次取指后都自增1。</p>
 <p><strong>FLAGS</strong> 指定将FLAGS用作程序状态指示，也即PSW（Program Status Word）。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231018224328803.png" alt="image-20231018224328803"></p>
 <h2 id="指令系统"><a href="#指令系统" class="headerlink" title="指令系统"></a>指令系统</h2><p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231018230055341.png" alt="image-20231018230055341"></p>
 <h3 id="PTR什么时候用？"><a href="#PTR什么时候用？" class="headerlink" title="PTR什么时候用？"></a><code>PTR</code>什么时候用？</h3><p>有寄存器时不用，无寄存器（包含【bx】）时要使用，防止源操作数和目的操作数位数不一致</p>
+<p><code>BYTE PTR</code>指明是要赋单字节值</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36561697/article/details/80698875">https://blog.csdn.net/qq_36561697/article/details/80698875</a></p>
 <h2 id="寻址方式"><a href="#寻址方式" class="headerlink" title="寻址方式"></a>寻址方式</h2><h3 id="1-立即寻址"><a href="#1-立即寻址" class="headerlink" title="1.立即寻址"></a>1.立即寻址</h3><p>操作数直接存放在指令中，立即寻址方式用来表示常数，它经常用于给寄存器赋初值，并且只能用于源操作数字段，不能用于目的操作数字段，且源操作数 长度 应与目的操作数 长度一致。</p>
 <p><strong>例子：MOV AX, 3064H</strong> </p>
@@ -446,6 +453,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231019223728313.png" alt="image-20231019223728313"></p>
 <h3 id="5-寄存器相对寻址"><a href="#5-寄存器相对寻址" class="headerlink" title="5.寄存器相对寻址"></a>5.寄存器相对寻址</h3><p>操作数的有效地址为基址寄存器或变址寄存器的内容和指令中指定的位移量之和， 所以有效地址由两种成分组成。</p>
 <p><strong>例子：MOV AX, COUNT[SI]</strong> （也可表示为<strong>MOV AX, [COUNT+SI])</strong>	其中<strong>COUNT为16位位移量的符号地址。</strong></p>
+<p><strong>MOV AX, [BX+10]</strong></p>
 <p>如果 (DS) = 3000H, （SI）= 2000H, COUNT= 3000H</p>
 <p>则物理地址EA＝30000+2000+3000= 35000H </p>
 <h3 id="6-基址变址寻址"><a href="#6-基址变址寻址" class="headerlink" title="6.基址变址寻址"></a>6.基址变址寻址</h3><p>操作数的有效地址是一个基址寄存器和一个变址寄存器的内容之和，所以有效地址由两种成分组成</p>
@@ -457,6 +465,20 @@
 <p><strong>例子：MOV MASK[BX] [SI]（也可写成MOV AX, MASK[BX+SI]或MOV AX, [MASK+BX+ SI])</strong></p>
 <p>如（DS)= 3000H, (BX)= 2000H, (SI）= 1000H，MASK= 0250H, </p>
 <p>则 物理地址<strong>EA＝（DS)&lt;&lt;4	+(BX)+(SI）+MASK</strong><br>= 30000+2000+1000+0250 = 33250H<br>执行结果(AX)= 1234H。<br><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231019225646835.png" alt="image-20231019225646835"></p>
+<h2 id="存储器寻址"><a href="#存储器寻址" class="headerlink" title="存储器寻址"></a>存储器寻址</h2><p><strong><font color="red">一个指令不能有两个存储器操作数</font></strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231104220620156.png" alt="image-20231104220620156"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231104220640105.png" alt="image-20231104220640105"></p>
+<h3 id="PTR什么时候用？-1"><a href="#PTR什么时候用？-1" class="headerlink" title="PTR什么时候用？"></a><code>PTR</code>什么时候用？</h3><p>有寄存器时不用，无寄存器（包含【bx】）时要使用，防止源操作数和目的操作数位数不一致</p>
+<p><code>BYTE PTR</code>指明是要赋单字节值</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36561697/article/details/80698875">https://blog.csdn.net/qq_36561697/article/details/80698875</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231104221244053.png" alt="image-20231104221244053"></p>
+<h2 id="控制转移寻址"><a href="#控制转移寻址" class="headerlink" title="控制转移寻址"></a>控制转移寻址</h2><p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231104221750451.png" alt="image-20231104221750451"></p>
+<h3 id="SHORT和FAR什么时候用"><a href="#SHORT和FAR什么时候用" class="headerlink" title="SHORT和FAR什么时候用"></a>SHORT和FAR什么时候用</h3><p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231104221830111.png" alt="image-20231104221830111"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231104222152841.png" alt="image-20231104222152841"></p>
+<p>看看PPT（第3章）记忆吧，总不能把这个文档全贴上图，这里仅仅放了near和far，因为经常见到，算是备忘录吧</p>
+<h2 id="数据移动"><a href="#数据移动" class="headerlink" title="数据移动"></a>数据移动</h2><p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231104222419547.png" alt="image-20231104222419547"></p>
+<p>注意段寄存器需要寄存器间接，可以说是设计上的缺陷吧，或者其他什么原因。注意CS是不能寄存器直接改的，但是DS和ES是可以的，只要注意固定搭配</p>
+<h2 id="指令大全"><a href="#指令大全" class="headerlink" title="指令大全"></a>指令大全</h2><p>看第4讲PPT</p>
 
                 
             </div>
