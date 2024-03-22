@@ -340,7 +340,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    8 分
                 </div>
                 
 
@@ -479,6 +479,11 @@
 <h2 id="数据移动"><a href="#数据移动" class="headerlink" title="数据移动"></a>数据移动</h2><p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231104222419547.png" alt="image-20231104222419547"></p>
 <p>注意段寄存器需要寄存器间接，可以说是设计上的缺陷吧，或者其他什么原因。注意CS是不能寄存器直接改的，但是DS和ES是可以的，只要注意固定搭配</p>
 <h2 id="指令大全"><a href="#指令大全" class="headerlink" title="指令大全"></a>指令大全</h2><p>看第4讲PPT</p>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231105193717038.png" alt="image-20231105193717038"></p>
+<h2 id="以字节对齐"><a href="#以字节对齐" class="headerlink" title="以字节对齐"></a>以字节对齐</h2><p><img src="C:/Users/1/AppData/Roaming/Typora/typora-user-images/image-20231105195609620.png" alt="image-20231105195609620"></p>
+<p>在汇编语言中，<code>BX</code> 寄存器通常用来存储地址或偏移量。乘以2（SHL BX, 1）可能是因为<strong>查找表中的条目是按字（Word）大小存储的</strong>，而字的大小通常是2个字节（16位），因此需要将 <code>BX</code> 乘以2以获得正确的<strong>字节偏移</strong>。</p>
+<p><strong><font color="DarkVoilet">这是因为在汇编语言中，地址通常是按字节而不是字（Word）对齐的。</font></strong><font color="MediumVioletRed">查找表的每个条目都是字大小的</font>，因此如果你要访问查找表中的一个条目，你需要考虑每个条目的大小，通常是2个字节，所以需要将 <code>BX</code> 乘以2以得到正确的字节偏移。这确保了你在查找表中正确地访问到所需的条目。</p>
+<p>当你在程序中执行 <code>SHL BX, 1</code> 操作时，实际上是将 <code>BX</code> 寄存器的值左移一位，相当于将其乘以2。这是一种常见的操作，用于计算地址偏移量，以便访问数组、查找表或其他内存结构中的元素。这可以确保访问到正确的数据，以执行条件分支操作。</p>
 
                 
             </div>
@@ -1160,7 +1165,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2023</span>
+                <span id="year">2023-2024</span>
             
             <a href="/about" target="_blank">liwuxuan</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
