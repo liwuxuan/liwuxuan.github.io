@@ -1,37 +1,435 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
-{% block page_class %}page-post-detail{% endblock %}
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.liwuxuanplus.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_43590232&#x2F;article&#x2F;details&#x2F;104735102 https:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;3332947&#x2F;what-are-the-practical-factors-to-consider-when-choosing-between-depth-first-sea BFS适用于需要找到最">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搜索">
+<meta property="og:url" content="https://www.liwuxuanplus.com/2023/10/10/sou-suo/index.html">
+<meta property="og:site_name" content="MySite">
+<meta property="og:description" content="https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_43590232&#x2F;article&#x2F;details&#x2F;104735102 https:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;3332947&#x2F;what-are-the-practical-factors-to-consider-when-choosing-between-depth-first-sea BFS适用于需要找到最">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231008203914915.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231008210924883.png">
+<meta property="article:published_time" content="2023-10-10T10:10:03.000Z">
+<meta property="article:modified_time" content="2023-10-10T12:02:29.464Z">
+<meta property="article:author" content="liwuxuan">
+<meta property="article:tag" content="程序设计">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231008203914915.png">
+
+<link rel="canonical" href="https://www.liwuxuanplus.com/2023/10/10/sou-suo/">
 
 
-{% block content %}
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+  <title>搜索 | MySite</title>
+  
 
-    <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">MySite</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">There is MySite</p>
+  </div>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.liwuxuanplus.com/2023/10/10/sou-suo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="liwuxuan">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MySite">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          搜索
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-10-10 18:10:03 / 修改时间：20:02:29" itemprop="dateCreated datePublished" datetime="2023-10-10T18:10:03+08:00">2023-10-10</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43590232/article/details/104735102">https://blog.csdn.net/weixin_43590232/article/details/104735102</a></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/3332947/what-are-the-practical-factors-to-consider-when-choosing-between-depth-first-sea">https://stackoverflow.com/questions/3332947/what-are-the-practical-factors-to-consider-when-choosing-between-depth-first-sea</a></p>
+<p><strong>BFS适用于需要找到最短路径或距离起点最近的解决方案的问题，而DFS适用于需要深度探索或搜索所有可能解决方案的问题。</strong></p>
+<p><strong>BFS通常只用来找一个解决方案，DFS用来找所有解决方案。</strong>BFS当然可以搜索所有解决方案，而且时间复杂度跟DFS相同，但是BFS的空间复杂度比DFS高太多了。</p>
+<p>BFS和DFS的相邻点 有的时候很明显，有的时候不明显，需要自己总结一下。在做CSP题时，基本上没有明显的节点，都是需要抽象出来树形结构的</p>
+<p><strong>做题第一步，纸上写出树形结构，分别考虑边和点。边考虑回溯，点考虑BFS和DFS。一定要考虑记忆化搜索和剪枝，不然一般都会超时。</strong></p>
+<h2 id="BFS-最短路径问题"><a href="#BFS-最短路径问题" class="headerlink" title="BFS(最短路径问题)"></a>BFS(最短路径问题)</h2><h3 id="BFS问题的本质都是找从start到target的最短路"><a href="#BFS问题的本质都是找从start到target的最短路" class="headerlink" title="BFS问题的本质都是找从start到target的最短路"></a><code>BFS</code>问题的本质都是找从<code>start</code>到<code>target</code>的最短路</h3><p>如果是找最短路径，第一时间想<code>BFS</code>，注意是<code>短</code></p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">BFS</span><span class="params">(Node start, Node target)</span> </span>{</span><br><span class="line">    queue&lt;Node&gt; q; </span><br><span class="line">    unordered_set&lt;Node&gt; visited;<span class="comment">//一般是用bool vis[size];用1表示自己去过了,数组访问O(1)。不过unordered_set也差不多。</span></span><br><span class="line">    <span class="comment">//一般是用数组。但是一些问题的索引不好确认，用unordered_set更好，普适性更好一些，但是需要确认元素是否重复（用值时）</span></span><br><span class="line">    q.<span class="built_in">push</span>(start); </span><br><span class="line">    <span class="comment">//visited.insert(start);//有时候写上会有问题，有了下面的，这里不要写了</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (!q.<span class="built_in">empty</span>()) {</span><br><span class="line">        <span class="type">int</span> sz = q.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; sz; i++) {</span><br><span class="line">            Node cur = q.<span class="built_in">front</span>();</span><br><span class="line">            q.<span class="built_in">pop</span>();</span><br><span class="line">            visited.<span class="built_in">insert</span>(cur);<span class="comment">//必要</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (cur == target)</span><br><span class="line">                <span class="keyword">return</span> step;</span><br><span class="line">            <span class="keyword">for</span> (Node x : cur.<span class="built_in">adj</span>()) {<span class="comment">//不管是 邻接表 还是邻接数组 还是链式前向星 都要会写</span></span><br><span class="line">                <span class="keyword">if</span> (visited.<span class="built_in">count</span>(x) == <span class="number">0</span>) {</span><br><span class="line">                    q.<span class="built_in">push</span>(x);</span><br><span class="line">                    visited.<span class="built_in">insert</span>(x);</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// 如果走到这里，说明在图中没有找到目标节点</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>BFS</code>的<code>vis</code>数组一般只加不减，<code>vis</code>只是用来指示	邻接点	是否已经遍历过了</p>
+<h2 id="BFS优化（双向BFS）"><a href="#BFS优化（双向BFS）" class="headerlink" title="BFS优化（双向BFS）"></a><code>BFS</code>优化（双向<code>BFS</code>）</h2><p><strong>前提：已经知道终点，从起点和终点分别开始<code>BFS</code>，可以降低	大约一半<code>空间复杂度</code>和<code>时间复杂度</code>。这种技巧实际上并没有降低big O时间复杂度。用BFS还是双向BFS看情况吧。</strong></p>
+<p>双向 BFS 还是遵循 BFS 算法框架的，只是<strong>不再使用队列，而是使用<code>unordered_set</code>方便快速判断两个集合q1、q2是否有交集。起点和终点分别加入<code>unordered_set</code>，遍历一个集合的时候，判断另一个集合是否有该元素。</strong>。</p>
+<p>另外的一个技巧点就是 <strong>while 循环 <code>while( !q1.empty()&amp;&amp;!q2.empty()  )</code>的最后交换 <code>q1</code> 和 <code>q2</code> 的内容</strong>，所以只要默认扩散 <code>q1</code> 就相当于轮流扩散 <code>q1</code> 和 <code>q2</code>。			或者 可以加一个<strong>判定<code>if (q1.size() &gt; q2.size()) </code>交换，仍然默认<code>q1</code>，但每次使用最小的集合</strong>。跟上边没什么区别。</p>
+<p><strong>必掌握：求“最短路径”</strong></p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">BFS</span><span class="params">(Node start, Node target)</span> </span>{</span><br><span class="line">    unordered_set&lt;Node&gt; q1, q2, visited;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> step = <span class="number">0</span>;<span class="comment">//记录路径长度</span></span><br><span class="line">    q1.<span class="built_in">insert</span>(start);</span><br><span class="line">    q2.<span class="built_in">insert</span>(target);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(!q1.<span class="built_in">empty</span>() &amp;&amp; !q2.<span class="built_in">empty</span>()){</span><br><span class="line">        <span class="comment">// 哈希集合在遍历的过程中不能修改，用 temp 存储扩散结果</span></span><br><span class="line">        unordered_set&lt;string&gt; temp;<span class="comment">//现在是q1遍历后的q1，相当于clear了</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 将 q1 中的所有节点向周围扩散 */</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> cur : q1){</span><br><span class="line">            <span class="comment">/* 判断是否到达终点 */</span></span><br><span class="line">            <span class="keyword">if</span>(q2.<span class="built_in">count</span>(cur))</span><br><span class="line">                <span class="keyword">return</span> step;<span class="comment">//q1、q2相交，代表找到了</span></span><br><span class="line"></span><br><span class="line">            visited.<span class="built_in">insert</span>(cur);</span><br><span class="line"></span><br><span class="line">            <span class="comment">/* 将一个节点的未遍历相邻节点加入集合 */</span></span><br><span class="line">            <span class="keyword">for</span> (Node x : cur.<span class="built_in">adj</span>()) {<span class="comment">//不管是 邻接表 还是邻接数组 还是链式前向星 都要会写</span></span><br><span class="line">                <span class="keyword">if</span> (visited.<span class="built_in">count</span>(x) == <span class="number">0</span>) {</span><br><span class="line">                    temp.<span class="built_in">push</span>(x);<span class="comment">//注意：应该是往temp里面加入元素</span></span><br><span class="line">                    visited.<span class="built_in">insert</span>(x);</span><br><span class="line">                }</span><br><span class="line">       		}</span><br><span class="line">        <span class="comment">/* 在这里增加步数 */</span></span><br><span class="line">        step++;</span><br><span class="line">        <span class="comment">// temp 相当于 新的 q1</span></span><br><span class="line">        <span class="comment">// 这里交换 q1 q2，下一轮 while 就是扩散 q2</span></span><br><span class="line">        q1 = q2;</span><br><span class="line">        q2 = temp;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://oi-wiki.org/search/astar/">A* - OI Wiki (oi-wiki.org)</a></p>
+<p>这里涉及到了一个启发式搜索</p>
+<h2 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a><code>DFS</code></h2><p>DFS和回溯一般都是混用的，大家没严格区分</p>
+<p>时间复杂度较高，但是可以拿部分的分 </p>
+<p>本质上是 暴力穷举，递归函数，跟回溯基本一致。不要特别在意区分回溯和<code>DFS</code>，只要能做题就行。一般都是void，不用到返回值。</p>
+<p><strong><code>DFS</code>必掌握“N皇后问题、全排列”</strong>，呃，这俩都是回溯</p>
+<p>一般不会求最值，没有最优子结构</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> vis[N];<span class="comment">//DFS经常用到，当然也可以用unordered_map</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(参数)</span> </span>{</span><br><span class="line">  <span class="keyword">if</span> (终止条件) {</span><br><span class="line">      处理语句</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">  }</span><br><span class="line">    <span class="keyword">for</span> (邻接点) {</span><br><span class="line">        <span class="keyword">if</span>(下一步有效)<span class="comment">//一般是 !vis[i]</span></span><br><span class="line">        {</span><br><span class="line">            处理</span><br><span class="line">            vis[i]=<span class="number">1</span>;</span><br><span class="line">      			<span class="built_in">dfs</span>(参数);</span><br><span class="line">      		撤销处理</span><br><span class="line">            vis[i]=<span class="number">0</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">  </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>就是二叉树遍历的<code>void traverse()</code>函数</p>
+<p><strong>一般情况下，回溯算法的「做选择」和「撤销选择」在 for 循环里面，而<code>DFS</code>的操作在 for 循环外面。这是回溯算法和 DFS 算法的区别所在：回溯算法关注的不是节点，而是树枝（也可以说边，就是for里面 的路径选择）。而DFS只处理本身节点的选择和撤销选择。二者的区别在于根节点，DFS会处理和撤销处理根节点，但是回溯不行（回溯关注的是边，边数=点数-1（无环图成立，但是回溯等一般的 图算法都会visited掉环，所以对回溯是永远会漏掉根节点（大概？） ），回溯会漏掉根节点）。</strong></p>
+<p>dfs和回溯都是void遍历+外部变量，动态规划是有返回值的（后序遍历）。相同点是都要在前序位置（入栈前判断，判断是否入栈）写判定条件（一定要考虑好边界条件），在后面写的时候，哪怕判断条件重复，实际上也不会影响算法效率。</p>
+<p>通过选边还是选点，选择回溯或者DFS</p>
+<h3 id="非明显节点型"><a href="#非明显节点型" class="headerlink" title="非明显节点型"></a>非明显节点型</h3><h4 id="1-排列组合问题"><a href="#1-排列组合问题" class="headerlink" title="1.排列组合问题"></a>1.排列组合问题</h4><p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231008203914915.png" alt="image-20231008203914915"></p>
+<p><strong>边问题，回溯</strong></p>
+<p>求一个数组的全排列，这个要注意一点，vis标记与撤销，vis不能不撤销，那样会导致其他分支被剪掉，从而只会剩下一个排列。</p>
+<h4 id="2-表格型（棋盘型、迷宫型）"><a href="#2-表格型（棋盘型、迷宫型）" class="headerlink" title="2.表格型（棋盘型、迷宫型）"></a>2.表格型（棋盘型、迷宫型）</h4><p>典型：“N皇后”问题</p>
+<p>关键步骤：找到遍历逻辑（怎么遍历），至于皇后不能攻击、迷宫墙不能通过……这些问题是后期限制条件(if语句、剪枝)，前期不用管。</p>
+<p>遍历逻辑——&gt;转化为树形结构（图本身也算树形大类）</p>
+<p><strong>根节点为空，考虑回溯（抽象为边，边问题的根节点是空的）。</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20231008210924883.png" alt="image-20231008210924883"></p>
+<p>N皇后一般思路：每行取一个皇后，这个皇后可以在该行的每个列（只要不在另一个皇后的攻击范围）——&gt; 后面加<code>if</code>限制条件。</p>
+<p> <strong>在宽度优先和深度优先搜索里面，我们都是根据搜索的顺序依次进行搜索，可以称为盲目搜索，搜索效率非常低。</strong></p>
+<p>而启发式搜索则大大提高了搜索效率，但启发式搜索可能很繁琐</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/isguxing/p/9800490.html">https://www.cnblogs.com/isguxing/p/9800490.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" rel="tag"># 程序设计</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/10/07/gen-ju-shu-ju-gu-suan-shi-jian-fu-za-du/" rel="prev" title="根据数据估算时间复杂度">
+      <i class="fa fa-chevron-left"></i> 根据数据估算时间复杂度
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/10/19/hui-bian-yu-yan/" rel="next" title="汇编语言">
+      汇编语言 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BFS-%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">BFS(最短路径问题)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BFS%E9%97%AE%E9%A2%98%E7%9A%84%E6%9C%AC%E8%B4%A8%E9%83%BD%E6%98%AF%E6%89%BE%E4%BB%8Estart%E5%88%B0target%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF"><span class="nav-number">1.1.</span> <span class="nav-text">BFS问题的本质都是找从start到target的最短路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BFS%E4%BC%98%E5%8C%96%EF%BC%88%E5%8F%8C%E5%90%91BFS%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">BFS优化（双向BFS）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DFS"><span class="nav-number">3.</span> <span class="nav-text">DFS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E6%98%8E%E6%98%BE%E8%8A%82%E7%82%B9%E5%9E%8B"><span class="nav-number">3.1.</span> <span class="nav-text">非明显节点型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%8E%92%E5%88%97%E7%BB%84%E5%90%88%E9%97%AE%E9%A2%98"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.排列组合问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E8%A1%A8%E6%A0%BC%E5%9E%8B%EF%BC%88%E6%A3%8B%E7%9B%98%E5%9E%8B%E3%80%81%E8%BF%B7%E5%AE%AB%E5%9E%8B%EF%BC%89"><span class="nav-number">3.1.2.</span> <span class="nav-text">2.表格型（棋盘型、迷宫型）</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">liwuxuan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liwuxuan</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

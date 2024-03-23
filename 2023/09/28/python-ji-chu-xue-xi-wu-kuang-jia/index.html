@@ -1,37 +1,1161 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
-{% block page_class %}page-post-detail{% endblock %}
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.liwuxuanplus.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="因为是以前的PDF转的Markdown,很多图片在上传图床的时候出了问题，暂时没有想到好的解决办法，将就一下吧  注意函数不能修改不可变对象，C++的swap在python里面是一句a,b&#x3D;b,a  Python不适合大工程，但是做小型项目就非常快。web推荐Django(好处是全面)，Flask（轻量）。桌面的话就推荐PyQt。 字符串不可改变，只能换新。split()可以基于指定分隔符将字符串">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python基础学习（无框架）">
+<meta property="og:url" content="https://www.liwuxuanplus.com/2023/09/28/python-ji-chu-xue-xi-wu-kuang-jia/index.html">
+<meta property="og:site_name" content="MySite">
+<meta property="og:description" content="因为是以前的PDF转的Markdown,很多图片在上传图床的时候出了问题，暂时没有想到好的解决办法，将就一下吧  注意函数不能修改不可变对象，C++的swap在python里面是一句a,b&#x3D;b,a  Python不适合大工程，但是做小型项目就非常快。web推荐Django(好处是全面)，Flask（轻量）。桌面的话就推荐PyQt。 字符串不可改变，只能换新。split()可以基于指定分隔符将字符串">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/03ef78595848ed93ebf0db0171cf3d95.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/fb4a7202372fc8f46b0d33bbb0e5e1cd.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/521dbeefac9c8dec33977701045d8acf.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/2dee1a946c2d645d64338f0324a2d0f5.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/69696b15fa732f3728d6d2563437f3a1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/eae1a4e6e2c4b3a046a4af953794351f.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/fde29955aa45ea9ab8c9446961b6bccb.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/f08621679d95377e3dc1bc261de1f283.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/a7dff5ee018135538cc1c8c4b0e88eda.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/55ab63cdad4c7db3f48daa60492e00a7.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/5b3157cc5b1a36bcf58ca28c4712efaf.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/38b1d47d4916fe53e189174efd79f089.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/69b6873d84fb6243d87a868a2434c391.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/3056c83a7c1995b9119af3bbc2de8393.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/b8143fb754253c08bc023cf18742b72b.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/e2a7467582549419d5ef7d0a4fe7085c.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/99845659f5e2ea9a4b25586b1f877c89.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/324a8226693add7cdddb4e491590735e.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/5a86591ffecb35716bbd2bbf2250b7c1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/128ea372360a3032345e4825b75a56ce.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/9a93575f55d0a91a996456c8fd66252b.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/0b9d520320aca530fd4089c0457d5073.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/8fe797b6eb248716345214123f839cf6.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/92508e2d275ff63cea0f899efe7f0e12.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/863b02ba481b7d019e2325d8ead1f5e3.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/f1db99fac41d62bcae3b4ae9b6de983d.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/2ffae691893dc0be9750bdb1fa5367de.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/aa723b6d69286e768c13aca610fd290a.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/b5b34040403c38b50498bf3e2534f3f2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/34f5eb856589e3e9db1fd61222214952.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/33c977ed9328da06844b3095188c49e7.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/89414341722e7044822b003c1c246fbf.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/7de5e29e56fb8f04933bf88242a9fdc9.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/9911e6d1a881e3488c41cf5aba852d7e.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/816f677122870edca3a30dd27e3559c1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/bf592487cb836c1bf906070044c14ae6.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/2191ade786c4ff99bf0a64b03a4c88ce.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/125a014c20f548e9a0ccdf1693990245.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/830d7a8cd6f4d0446c135d6b7cb3bfeb.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/c8b085c1932495870b374d15fdd6e26e.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/d97b751ff004ba1bd421a218dd53f439.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/d40dd248f3bd7fc2c9b4adf4a82af749.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/6ad79cc3f123f55cdedf27a1d227808f.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/6dbc069288a6e14240aa1de25db94d56.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/dc3152e5f4e15ae629fc1c311618f9c2.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/cc06c906d6edff9ea019665c33a32af5.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/71c56e2c522582a79524793030804630.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/cd1b89ee15c868917caa13dd7b40d126.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/a4aa18d9fd5e8981e29d98d42c16e074.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/f27bcd249cf17587bd790510b1b8a5ca.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/87280a5742b3a08c2510ecce9416b656.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/e9fb901e4c9c5ea487b43e77e2ec891e.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/16d04a53e970d4773aad39c93d880d43.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/56de5343546efc74a7cd255100b0bda3.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/fde8941d67c26072d96099d31523fbc5.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/bb90e6c1710ee7be0e3ec92b88761782.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/642b224f788c91057cb8bcaa8ebd70b5.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/48c527366ccb11ed30405eef55f0cc2b.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/8688a6c2a7256c8ac0022dd2212d23c5.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/1329006ad1917c59bf84bc5059804f5e.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/7dded9565f6099ab74c4107119891229.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/1b8ea5f01f1bf0bb252e843abc04e251.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/5b0961cc8d4ab7541430b8be270dd6e2.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/08a591e9409c6a58645387309f56974c.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/24a4d72636d0cf896d00d373684a45fd.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/b283095130a877c4d813d0e8ed9fa37e.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/86f1062878e155504a4f19d344f05b15.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/ff8633246f59c7fc6bdc274c8cb648cc.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/343a74b7ce0333081a944a0cea2f6f47.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/4c9cacfbb0970b6d39a1d6e66afe1005.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/21d188e627a4813d695aeb2e512d9e92.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/53f42e31e43faf22eadc0c80aa758c41.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/756ed47d83453b3fab5530f222501e95.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/9ded222351c54e1acfb7247e44fc5b9e.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/a84fb17820b43fb06d7105df371c198a.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/4e193ad8f257364f215a65c4ace0531d.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/f4881d3d836672642c8b0ba49e328846.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/e8156f57b51145720134921423f03d9a.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/a40365c9dba1fe8899626149548fd724.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/2d642db26c8823f4ff585900649fd0bd.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/88c0467a76727676731c03ce9b506149.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/6976ff28e24ee13cb2174aa3fec44740.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/1094a5535946971ac2437b92921bf8b5.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/2a5b1e3ef9d98fc82dc8ed4aaa78ed4d.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/5ad43ca60ddfedf90d95f1ef993fce7d.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/0bcd78c21723403e8afa218e71fe627e.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/fb4a7202372fc8f46b0d33bbb0e5e1cd.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/d08efb40d3a9ef9fcb0a3fd1db4ce2ca.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/b37371125bbeed34df9bd0fe1a626e97.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/0f8bea5b794089eadd01ffa7c98f50d4.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/b9c7d648809848d7986685869f4da8b4.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/1ee91cd71900052b8c774e931b9133e2.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/1b9c8a889b5c2bbfe5600b450bdc8cef.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/4fc245c97f5a5c663912a8501dc3d4b4.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/065411778fd8a4a34c14bc4cc37c2343.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/4d18918fa76200a669686f5a1c41f96a.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/371bbfeca007041a4d2fccb52faa23d6.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/f7486670e2a166ba717b2ce0598d8026.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/f99102c872111faeb7dd1ad2a2961801.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/4b2f84312ff3c8b33304eb3e0bb561bf.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/26575707b05459b254bab673ca235799.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/1c60770ae4336bd251147231b249eafc.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/ce34dac57c89947c9a8e9f7451db0f0e.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/bd0993c05d4bc74ad8b1f4b12c54a538.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/258dbfe3a3851d69bd1e7310436ff0c1.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/b726bea957e0e8684d6e0534a8bb007a.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/d15b477cbe7914868d60c342942fa4dd.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/4f3f353fa13f5b110f07b58f362677f6.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/7586d446e88710f6a894c7fd051f799c.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/7977b6d03d0bcc400cd9e27f2667fc28.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/20e0ef7f2d608ca49e2ac416ed9cb827.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/964247d6f43c19678fdacb32d20d2962.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/2ffe68ad9332090ac8962d181e3988b9.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/837d2d84e6058faf4d44bab587d2d989.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/af2a15a4388e51b8c50074ed34cae3e7.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/bc2d539e6c1fc425621fbc40f7a99968.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/e83c06af222ce2b98869cb8a8c0fbf04.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/aa9a92fd27744840c7bd690ca9582a4e.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/567a5f6a6d2dd4719b6e2212e67cb54b.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/b698d9cb91c6deeae18581ce9e73cf4a.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/c161001982d0608ca7da756dfb603730.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/e605df63744dec248f83bb9fb2935ed0.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/51dc122f44d5c6dad955adcb063a525d.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/a637fea850e68e326b198a6dcbba9e97.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/69d0e7c17ddb38d79606ada48d8fa110.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/b39f6b57edcd68fcd4b1a8aee7ad3380.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/9722de82fa2b86c5f772d7a29cecb606.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/d9adc2bceda871f9d7b7cc3d52ec9134.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/f331f0e07584fa2100dc15cd929e2604.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/97603811d560cb61623f087c3862950d.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/63c9ea1a89f0de1ed9e139ee5acaa01f.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/8cbdd9a380c148eaac64796999fc2f3c.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/8ffb45ba4c0bab7f7291c2a481a6f664.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/3e166495ff6df5e49daa1ded93ca2aa6.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/2c5e4ab4f5d8a24e6de8fc5ea207d1e3.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/6632b903c963856103b0664fe310efc4.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/9c862f20ee2979e7cf50c73da5dbf0ef.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/cf053e96f9ec44f3c8238e50582ba5fe.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/35600c157168e0205da3942420749677.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/d49c362255c2f3d204b8c4b50263293e.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/a175eee504097075b7c370b99b5934bd.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/1a26bbea91d7f4d8469015f217f43476.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/8cd9c3402256e3e43732d9a5964db0ce.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/2d162345cdcbab8d15ac2af2e358f059.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/19940b27caba1435eafd0c76a6e1e3f8.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/dfa036235cd99929437ea4ad6c9f25d1.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/05fd91c33a1a57b408281898d1ba9d14.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/7e3a0b8a9052f91eb74f940e2052cef5.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/201cd7bcc2fe2565b5e504874c70647e.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/e1f818703598f4af1643370bd0a6a45c.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/a08422d3aa0f6f7a8a2c079e06a81b3d.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/796d86b5bad6b588c2463dce5c058826.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/4d412c4a644c3e1a24d740c94b290352.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/0c404f4455dfafc531533f0ea72003ac.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/6d13a317be7dd287ebb7a04ef9e31be7.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/b98aff805ddbb98dacbde454efb1c141.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/323160099463587c5a33d4310834b4d4.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/cc4348d9260290ce1b12bc8891e881cf.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/3bbc8395eb890d96c101ab7c3dbad584.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/b26eb59e6de9d221c58e6b35e7a60ccf.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/1eda32faa3a7c506c5a80556956588d9.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/58e43ef161af6114361f6c54b5a94f8f.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/98368a90b4e8186cdfccb332d8000e0d.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/69beb7d10b276aae6a77ef600c44df0f.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/c0bd3fd85a82257d609a221b4ce3cb95.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/17bb1627c9ec9707d575236f024c3587.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/d4897f63e60cdc922245e0e98a0b9a6b.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/60a174956571aac30effd1e2b0761614.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/a9805712cb6ba8e0ab88922942745d3f.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/83cf6dee9f35e6c12d639aab7d0d5b02.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/03583c6d70f1fad84c3a881deb1707af.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/83107a32b908af0517de1dbd869d3cf2.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/78ff4f2647fe6cc0ffb7dc84ea701b51.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/670067e04d3c17704b584ffd4436cff5.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/b7cb75dfd8556ebf5f1ff8801274b949.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/aa6b88fb9a0f56c97129549645b03d7f.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/770b8df096790aa66762c9982422a7bf.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/9837d98e798699acf620ef4eba1dfa13.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/c77fc2dc50c7ccf4d997ac13c1853a85.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/5a2d15a46f7506800be8dc3f29e3fcfc.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/fc1f255d86521862732e2133980428c9.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/9a19e21a0c1206b9236f5a5975d8aeaf.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/b71ad6e10602e06ed734cafe9a7b30d2.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/249121b49b91bfc75f23350eba9c4e23.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/d0714153f35a004281c8c8c7ce4b97be.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/e5b98ad18581b788eb569efe01438de3.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/4b2e0017f9dcdde4da4b6634a45814fa.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/405fd07564cc2be747d31909d3f99c89.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/c5f9f6381b590e702b4e4bfcf922ddd7.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/0e387551485169e715eec8a63a7a5740.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/187a42cd4f8d3aeffbefbd96eb291ebf.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/187a42cd4f8d3aeffbefbd96eb291ebf.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/3c505e61f8728b922d7d4bc2d4ea663b.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/c33e04ca419b6ccd8d452d4f8d5385a1.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/ebeadcfc86331bea044c428a04d22d3d.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/a83c5ea5af4243b9b0c790ae73607216.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/c5a4cc61addd0078d359c6ea19c568fd.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/b636da3f185f8f6759b6e111de4895f3.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/81f916a8b27754d5d4f16547c4d3decf.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/2dc96d9a216380a4851dc1201f837e3f.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/77d643b897f7705e590c696b078f54bc.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/d5d8fb00c863534089314bf63a85dd67.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/8828ca013db424b24ea008d2f0dad8f9.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/8a741d497008584d9aa72763c5d7efe6.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/d0c2859c084cc88c930b2eee16786830.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/7e0e94db24f8ba295c72d740966eb5ad.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/10921db4ce0a382876f0d7d8ee2371dc.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/1756974674cd648eb2e1b35ef8c8c17a.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/412e08f6ff32b36214c2a2967126a4eb.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/d7bb28e513aac1287f2434ba5828ddde.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/f84a29d4465d8e4296a50407001734c8.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/5c9e5d388604ead3ed9bb7853d524481.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/c2cb294883f8d5084128405af328a982.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/b12977522c9f6acab2adf05930b6b52f.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/c9d0a488933197118cc20d292b30e856.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/afb0f3c88f956d0ee8211638f9fbda20.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/bfe84a775041a006f652425d72be4d29.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/336c3e414be4cf3f2710dc2f26fa3cdd.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/020269843604ed6e0658ac955c3b3f99.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/93407d69391a7cbdd765dfe60684d83a.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/614f431f2e013aab0dbf65ab5a475a35.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/a71bea50315b6bd2661f159d8d1fd821.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/3814c66b83692697ad7e3ab7beb5f7db.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/6576c13a242c11cc9ff9e5d553a89d6a.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/b8d54002f864c43c45d57914f3e09a77.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/482f24e98ca8a6a09b571ff5ceaef263.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/77e06b09e9f0b28bd1e41c52bc7ee1c7.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/2ebd2630cfb76c684cfed5e91c1adaf2.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/81db23386040a2d474817c7e3fce89b2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/361f6c97fc2c5a96f35922409d591f7e.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/3853ae15dd091c836067c99dcd9c2bb1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/0bb363dee73c4c3ea0af2ccf3161cbbc.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/cc01e860a1a7d6f9df4de0afc1f79bd0.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/8881ca70dc9f5874b399c779cc5b2baa.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/011fcbf6116b9ef47ec7fadae24fa8e1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/6b3ee37d2363fad453f10b029d6d6c35.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/6207dcdd960f94135e3092d80da7c442.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/5b957086b366afaa10a0139c20b6489e.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/7a5492b1087087e5e37f21f8f9098519.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/2b071f5d71be22710c2d9298cec25028.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/0d7a529883cdcd8d4d1d26195dcf3009.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/c67ab68631f13d1101f4b68a260c636f.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/f200f4d23bdea2ce320efc66a4590fcd.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/7dd6d8a841d2a15fcd80529c92ad6ff4.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/b56d814dfd9db7b77b8a993ac7010f54.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/3b01e4cbc31af0e86153658d2a06ac23.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/a7d4691384e2ec14bd650a747adebdce.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/9d314434a7ae9e314ee2ecee3406235c.png">
+<meta property="og:image" content="d:/%E6%A1%8C%E9%9D%A2/media/2c1da7152391fa08d626e2ef326d2941.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/f65f6f8a1c898b8802f6e83ac698bcfc.png">
+<meta property="article:published_time" content="2023-09-28T12:51:39.000Z">
+<meta property="article:modified_time" content="2024-03-22T12:27:58.773Z">
+<meta property="article:author" content="liwuxuan">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/03ef78595848ed93ebf0db0171cf3d95.png">
+
+<link rel="canonical" href="https://www.liwuxuanplus.com/2023/09/28/python-ji-chu-xue-xi-wu-kuang-jia/">
 
 
-{% block content %}
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+  <title>python基础学习（无框架） | MySite</title>
+  
 
-    <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">MySite</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">There is MySite</p>
+  </div>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.liwuxuanplus.com/2023/09/28/python-ji-chu-xue-xi-wu-kuang-jia/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="liwuxuan">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MySite">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python基础学习（无框架）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-09-28 20:51:39" itemprop="dateCreated datePublished" datetime="2023-09-28T20:51:39+08:00">2023-09-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-03-22 20:27:58" itemprop="dateModified" datetime="2024-03-22T20:27:58+08:00">2024-03-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>因为是以前的PDF转的Markdown,很多图片在上传图床的时候出了问题，暂时没有想到好的解决办法，将就一下吧</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/03ef78595848ed93ebf0db0171cf3d95.png"></p>
+<p>注意<strong>函数不能修改不可变对象</strong>，C++的swap在python里面是一句a,b=b,a</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/fb4a7202372fc8f46b0d33bbb0e5e1cd.png"></p>
+<p>Python不适合大工程，但是做小型项目就非常快。web推荐Django(好处是全面)，Flask（轻量）。桌面的话就推荐PyQt。</p>
+<p>字符串不可改变，只能换新。<strong>split()<strong>可以基于指定分隔符将字符串分隔成多个子字符串(存储到列表中)。如果不指定分隔符，则</strong>默认使用空白字符(换行符/空格/制表符)。</strong></p>
+<p><strong>join（）</strong>的调用对象是“分隔符”，参数是字符串列表。</p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/521dbeefac9c8dec33977701045d8acf.png"><img src="D:/桌面/media/2dee1a946c2d645d64338f0324a2d0f5.png"></strong></p>
+<p><strong>变量在栈内存，对象在堆内存，变量是对象的引用（地址）</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/69696b15fa732f3728d6d2563437f3a1.png"><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/eae1a4e6e2c4b3a046a4af953794351f.png"></p>
+<p>常量字符串也相当于缓存</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/fde29955aa45ea9ab8c9446961b6bccb.png"></p>
+<p>is对比id，==调用equal</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/f08621679d95377e3dc1bc261de1f283.png"></p>
+<p><img src="D:/桌面/media/a7dff5ee018135538cc1c8c4b0e88eda.png"></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38981172/article/details/90176525">python中的各种符号（欢迎补充）_python符号大全_杉木人的博客-CSDN博客</a></p>
+<p>Python的很多语法接近java。Python里面没有long，int可以无限大 。//是地板除，结果是整数。**是幂的意思。python里面没有单字符类型char，python里面单个字符也是字符串类型</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/moqisaonianqiong/article/details/114674204">python中format用法（最全汇总）_python语言format用法_西部点心王的博客-CSDN博客</a></p>
+<p>Python里面去掉了很多C++和java的格式，<strong>用缩进和冒号代替了大括号（千万不要忘记冒号）</strong>，缩进是区分大括号内容的重要参考，语句之间不需要分号隔开了</p>
+<p>注释的区别：在Python中，<strong>使用“#”作为单行注释的符号</strong>。从符号“#”开始直到换行为止，其后面所有的内容都作为注释的内容而被Python编译器忽略。多行注释是三引号（单引号或双引号都可以），在Python中，三引号（’’’……’’’）或者（”””……”””）是字符串定界符。所以，如果三引号作为语句的一部分出现，那么就不是注释，而是字符串。在JS中三引号有着同样的作用。</p>
+<p><img src="D:/桌面/media/55ab63cdad4c7db3f48daa60492e00a7.png"></p>
+<p>有一个链式赋值可以注意一下。</p>
+<p>Python代码规范：函数、类的属性和方法、包名全小写。类名大驼峰。内部类类名_大驼峰。常量名是全大写</p>
+<p>使用单下划线“_”开头的<strong>模块变量或者函数是受保护的</strong>，在使用import*from语句<strong>从模块中导入时这些变量或者函数不能被导入</strong>。</p>
+<p>使用双下划线“__”开头的<strong>实例变量或方法是类私有的</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/5b3157cc5b1a36bcf58ca28c4712efaf.png"></p>
+<p>Python的索引很神奇，允许是负数，-1就是最后一个元素，0是第一个元素，也就是循环<img src="D:/桌面/media/38b1d47d4916fe53e189174efd79f089.png"></p>
+<p>如果想要复制整个序列，可以将start和end参数都省略，但是中间的冒号需要保留。例如，sname[:]就表示复制整个名称为sname的序列。</p>
+<p>序列支持相同类型（序列类型，不是数据类型）相加。序列支持乘法（仅限与整数型），在Python中，使用数字n乘以一个序列会生成新的序列。新序列的内容为原来序列被重复n次的结果</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/69b6873d84fb6243d87a868a2434c391.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/3056c83a7c1995b9119af3bbc2de8393.png"></p>
+<p><img src="D:/桌面/media/b8143fb754253c08bc023cf18742b72b.png"></p>
+<p><img src="D:/桌面/media/e2a7467582549419d5ef7d0a4fe7085c.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/99845659f5e2ea9a4b25586b1f877c89.png"></p>
+<p>列表的使用非常灵活，可放进任意类型，同一个列表可容纳不同类型。用中括号括起来。</p>
+<p>在使用列表时，虽然可以将不同类型的数据放入同一个列表中，但是通常情况下，我们不这样做，而是在一个列表中只放入一种类型的数据。这样可以提高程序的可读性。</p>
+<p>使用list()函数不仅能通过range对象创建列表，还可以通过其他对象创建列表。</p>
+<p>print(列表名)在输出列表时，是包括左右两侧的中括号的。</p>
+<p>元组是不可变的列表（不可变是指单个元素不可修改，只能对整个元组进行重新赋值）。列表是中括号，元组是圆括号。元组的访问速度更快，元组可以作为字典的键，但是列表就不行</p>
+<p>字典类似于C++和java的map，但是字典是无序的，java 的map是一个接口，有有序的也有无序的。<strong>字典用花括号，键与值之间用冒号：隔开</strong></p>
+<p>注意一下，dict（）和zip（）</p>
+<p>enumerate()函数用于将一个<strong>可遍历的数据对象（如列表或元组）</strong>组合为一个索引序列，同时<strong>列出数据下标和数据</strong>，一般在for循环中使用。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/324a8226693add7cdddb4e491590735e.png"></p>
+<p><strong>Python的保留字和标识符是严格区分大小写</strong></p>
+<p><strong>Python中以下划线开头的标识符有特殊意义，一般应避免使用相似的标识符。</strong></p>
+<p><strong>①以单下划线开头的标识符（如_width）表示不能直接访问的类属性，另外，也不能通过from xxx import *导入；</strong></p>
+<p><strong>②以双下划线开头的标识符（如__add）表示类的私有成员；</strong></p>
+<p><strong>③以双下划线开头和结尾的是Python里专用的标识，例如，<strong>init</strong>()表示构造函数。</strong></p>
+<p>在Python语言中允许使用汉字作为标识符，如“我的名字=”明日科技””，在程序运行时并不会出现错误（如图2.17所示），但<strong>建议读者尽量不要使用汉字作为标识符</strong>。</p>
+<p>在Python中，<strong>不需要先声明变量名及其类型，直接赋值即可创建各种类型的变量</strong>。需要注意的是，对于变量的命名并不是任意的，应遵循以下几条规则。</p>
+<ol>
+<li>变量名必须是一个有效的标识符；</li>
+<li>变量名不能使用Python中的保留字；</li>
+<li>慎用小写字母i和大写字母O；</li>
+<li>应选择有意义的单词作为变量名。</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/5a86591ffecb35716bbd2bbf2250b7c1.png"></p>
+<p>这跟java和C++都不一样，它们都需要声明类型。</p>
+<p>Python是动态类型的语言（也称为弱类型语言），不需要像Java或者C语言一样在使用变量前必须先声明变量的类型。虽然Python不需要先声明变量的类型，但有时仍然需要用到类型转换。例如a=100是整型，在Java里面可以print(“hello”+a)，但是在python就是错的，print(“hello”+str（a）)这样才对</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/128ea372360a3032345e4825b75a56ce.png"></p>
+<p>另外，<strong>Python是一种动态类型的语言</strong>，也就是说，<strong>变量的类型可以随时变化</strong>。例如，在IDLE中，创建变量nickname，并赋值为字符串“碧海苍梧”，然后输出该变量的类型，可以看到该变量为字符串类型，再为变量赋值为数值1024，并输出该变量的类型，可以看到该变量为整型。在Python语言中，<strong>使用内置函数type()可以返回变量类型</strong>。</p>
+<p>在Python中，<strong>允许多个变量指向同一个值</strong>。将两个变量都赋值为数字2048，再分别应用内置函数id()获取变量的内存地址，将得到相同的结果。在Python语言中，<strong>使用内置函数id()可以返回变量所指的内存地址</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/9a93575f55d0a91a996456c8fd66252b.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/0b9d520320aca530fd4089c0457d5073.png"></p>
+<p><img src="D:/桌面/media/8fe797b6eb248716345214123f839cf6.png"></p>
+<p>Python的print和java的println一样，是自动换行的</p>
+<p>注意，python没有switch语句。for语句也有一些不一样</p>
+<p><img src="D:/桌面/media/92508e2d275ff63cea0f899efe7f0e12.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/863b02ba481b7d019e2325d8ead1f5e3.png"></p>
+<p><img src="D:/桌面/media/f1db99fac41d62bcae3b4ae9b6de983d.png"></p>
+<p>在保留了break和continue之外，Python多了一个代表doNothing的pass语句</p>
+<p><img src="D:/桌面/media/2ffae691893dc0be9750bdb1fa5367de.png"></p>
+<p>在Python里面没有提供定义 常量的保留字，不过在PEP 8规范中定义了常量的命名规范为大写字母和下划线组成，但是在实际项目中，常量首次赋值后，还是可以被其他代码修改。</p>
+<p>在python中，前缀区分进制：</p>
+<p>十进制开头不能是0，二进制是只有1或者0<br>在Python 3.x中，对于八进制数，必须以0o/0O开头</p>
+<p>十六进制必须以0X或0x开头。</p>
+<p>Python将数值转化为字符串的函数是str(arg)</p>
+<p>Python里面有一个复数类型。Python中的复数与数学中的复数的形式完全一致，都是由实部和虚部组成，并且使用j或J表示虚部。当表示一个复数时，可以将其实部和虚部相加，例如，一个复数，实部为3.14，虚部为12.5j，则这个复数为3.14+12.5j。</p>
+<p>在Python中，字符串属于不可变序列，通常使用单引号“’’”、双引号“”””或者三引号“’’’ ‘’’”或“”””””””括起来。这三种引号形式在语义上没有差别，只是在形式上有些差别。其中单引号和双引号中的字符序列必须在一行上，而三引号内的字符序列可以分布在连续的多行上</p>
+<p>其中，str表示Unicode字符（ASCII或者其他）；bytes表示二进制数据（包括编码的文本）。这两种类型的字符串不能拼接在一起使用。通常情况下，str在内存中以Unicode表示，一个字符对应若干个字节。但是如果在网络上传输，或者保存到磁盘上，就需要把str转换为字节类型，即bytes类型。</p>
+<p>Python的startswith、endswith函数与java的startsWith、endsWith函数是一样的</p>
+<p>函数定义时参数列表中的参数就是形式参数，而函数调用时传递进来的参数就是实际参数，就像剧本选主角一样，剧本的角色相当于形式参数，而演角色的演员就相当于实际参数。</p>
+<p><strong>当实际参数为不可变对象时，进行的是值传递；当实际参数为可变对象时，进行的是引用传递。这个看后面的解释比较好，按照栈内存和堆内存区分</strong></p>
+<p>值传递和引用传递的基本区别就是，进行值传递后，改变形式参数的值，实际参数的值不变；而进行引用传递后，改变形式参数的值，实际参数的值也一同改变。</p>
+<p>定义函数时，为形式参数设置默认值要牢记一点：默认参数必须指向不可变对象。</p>
+<p><img src="D:/桌面/media/aa723b6d69286e768c13aca610fd290a.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/b5b34040403c38b50498bf3e2534f3f2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/34f5eb856589e3e9db1fd61222214952.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/33c977ed9328da06844b3095188c49e7.png"></p>
+<p><img src="D:/桌面/media/89414341722e7044822b003c1c246fbf.png"></p>
+<p>记住*参数是元组，**参数是字典</p>
+<p>Python里面用global关键字修饰全局变量</p>
+<p>Python类名使用“大驼峰命名法”</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/7de5e29e56fb8f04933bf88242a9fdc9.png"></p>
+<p>类里面的函数都需要一个self参数</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/9911e6d1a881e3488c41cf5aba852d7e.png"></p>
+<p><img src="D:/桌面/media/816f677122870edca3a30dd27e3559c1.png"></p>
+<p>类属性是全类用一个，共享。实例属性 是每个实例的都不一样，区别是实例属性用self定义</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/bf592487cb836c1bf906070044c14ae6.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/2191ade786c4ff99bf0a64b03a4c88ce.png"></p>
+<p>保护属性可以通过实例名访问。</p>
+<p><img src="D:/桌面/media/125a014c20f548e9a0ccdf1693990245.png"></p>
+<p>私有属性可以在类的实例方法中访问，也可以通过“实例名.类名__xxx”方式访问，但是不能直接通过实例名＋属性名访问。</p>
+<p>_<em>foo__：首尾双下划线表示定义特殊方法，一般是系统定义名字，如__init</em>_()。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/830d7a8cd6f4d0446c135d6b7cb3bfeb.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/c8b085c1932495870b374d15fdd6e26e.png"></p>
+<p><img src="D:/桌面/media/d97b751ff004ba1bd421a218dd53f439.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/d40dd248f3bd7fc2c9b4adf4a82af749.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/6ad79cc3f123f55cdedf27a1d227808f.png"></p>
+<p>在Python里面也用super（）表示父类，java是用super。</p>
+<p>Python的__init__（）函数里面应该有下面这句</p>
+<p><img src="D:/桌面/media/6dbc069288a6e14240aa1de25db94d56.png"></p>
+<p>而java的构造函数需要只需要一句super()；</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/dc3152e5f4e15ae629fc1c311618f9c2.png"></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_35684521/article/details/81396434">Python中的 if _<em>name</em>_ == “<strong>main</strong>“到底是个啥意思？_大表哥在曾母暗沙的博客-CSDN博客</a></p>
+<p>if _<em>name</em>_ == “<strong>main</strong>“<strong>：</strong>这个语句使得<strong>该文件作为模块使用时下面的代码不运行</strong></p>
+<p><img src="D:/桌面/media/cc06c906d6edff9ea019665c33a32af5.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/71c56e2c522582a79524793030804630.png"><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/cd1b89ee15c868917caa13dd7b40d126.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/a4aa18d9fd5e8981e29d98d42c16e074.png"></p>
+<p><strong><img src="D:/桌面/media/f27bcd249cf17587bd790510b1b8a5ca.png"></strong></p>
+<p><strong>总结：import什么，以后调用就要用什么</strong></p>
+<p><strong>在异常处理方面，python跟java类似，但是java是catch，Python是except。抛出异常方面java是throw就跟C++一样，但是Python是raise。Python也有断言assert</strong></p>
+<p><strong><img src="D:/桌面/media/87280a5742b3a08c2510ecce9416b656.png"></strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/e9fb901e4c9c5ea487b43e77e2ec891e.png"></p>
+<p>Python的文件打开模式是</p>
+<p><img src="D:/桌面/media/16d04a53e970d4773aad39c93d880d43.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/56de5343546efc74a7cd255100b0bda3.png"></p>
+<p><img src="D:/桌面/media/fde8941d67c26072d96099d31523fbc5.png"></p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/python3/python3-mysql.html">Python3 MySQL 数据库连接 – PyMySQL 驱动 | 菜鸟教程 (runoob.com)</a></p>
+<p>尽管wxPython不是最流行的GUI，但他是书里面的。</p>
+<p>正常情况下更推荐PyQT5</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/bb90e6c1710ee7be0e3ec92b88761782.png"></p>
+<p>一般情况都用不到</p>
+<p><strong>序列</strong></p>
+<p><strong>列表：</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/642b224f788c91057cb8bcaa8ebd70b5.png"></p>
+<p>例a=[10,20,30,40]，则del a[2]和a.pop(2)和a.remove(30)是一样的效果，都是在原列表上的操作。remove是删除第一个该元素</p>
+<p>sort和sorted的reserve为True时都是降序</p>
+<p>sort和reserve都是在原列表上操作，方便的操作应该是都赋值一下。</p>
+<p><strong>元组</strong></p>
+<p><img src="D:/桌面/media/48c527366ccb11ed30405eef55f0cc2b.png"></p>
+<p>元组是不可变的列表，元组圆括号（可以省，这是唯一可以省的序列）。</p>
+<p><strong>这个不可变是指里面的不可变元素（数字等）不可变，如果元组里面的子对象（列表等）是一个可变子对象，是可以修改的。</strong></p>
+<p>元组特色zip()：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/8688a6c2a7256c8ac0022dd2212d23c5.png"></p>
+<p>字典经常用它构造（二元）。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/1329006ad1917c59bf84bc5059804f5e.png"></p>
+<p>生成器内部维护了一个指针，产生一个生成器对象，生成器对象有一个__next__()方法用于遍历。<img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/7dded9565f6099ab74c4107119891229.png"></p>
+<p>**<br>**</p>
+<p><strong>字典</strong></p>
+<p>字典是快速通过键对象获取值对象：<img src="D:/桌面/media/1b8ea5f01f1bf0bb252e843abc04e251.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/5b0961cc8d4ab7541430b8be270dd6e2.png"></p>
+<p>字典的访问通常使用get（），因为这个方法不会抛异常，而是在找不到的时候默认None</p>
+<p>get(查找的键对象key,找不到时的默认值)</p>
+<p><img src="D:/桌面/media/08a591e9409c6a58645387309f56974c.png"><img src="D:/桌面/media/24a4d72636d0cf896d00d373684a45fd.png"></p>
+<p><img src="D:/桌面/media/b283095130a877c4d813d0e8ed9fa37e.png"><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/86f1062878e155504a4f19d344f05b15.png"></p>
+<p><strong>———————————————————————————————————————</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/ff8633246f59c7fc6bdc274c8cb648cc.png"><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/343a74b7ce0333081a944a0cea2f6f47.png"></p>
+<p>删除的话有pop()和del()，参考元组和列表，将索引替换为键对象即可。还有clear（）清空。</p>
+<p>还有popitem()无参函数，随机删除一个（很少见 ）。</p>
+<p><img src="D:/桌面/media/4c9cacfbb0970b6d39a1d6e66afe1005.png"><img src="D:/桌面/media/21d188e627a4813d695aeb2e512d9e92.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/53f42e31e43faf22eadc0c80aa758c41.png"></p>
+<p>字典的底层实现看一下资料</p>
+<p><strong>集合</strong></p>
+<p>相当于字典的键对象集合</p>
+<p><img src="D:/桌面/media/756ed47d83453b3fab5530f222501e95.png"></p>
+<p>也用花括号</p>
+<p><img src="D:/桌面/media/9ded222351c54e1acfb7247e44fc5b9e.png"><img src="D:/桌面/media/a84fb17820b43fb06d7105df371c198a.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/4e193ad8f257364f215a65c4ace0531d.png"></p>
+<p>条件表达式</p>
+<p><img src="D:/桌面/media/f4881d3d836672642c8b0ba49e328846.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/e8156f57b51145720134921423f03d9a.png"><img src="D:/桌面/media/a40365c9dba1fe8899626149548fd724.png"></p>
+<p><img src="D:/桌面/media/2d642db26c8823f4ff585900649fd0bd.png"></p>
+<p><img src="D:/桌面/media/88c0467a76727676731c03ce9b506149.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/6976ff28e24ee13cb2174aa3fec44740.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/1094a5535946971ac2437b92921bf8b5.png"></p>
+<p>全局变量尽量少用（会降低通用性和可读性），且局部变量效率更高</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/2a5b1e3ef9d98fc82dc8ed4aaa78ed4d.png"></p>
+<p><img src="D:/桌面/media/5ad43ca60ddfedf90d95f1ef993fce7d.png">-</p>
+<p><img src="D:/桌面/media/0bcd78c21723403e8afa218e71fe627e.png"></p>
+<p><img src="D:/桌面/media/fb4a7202372fc8f46b0d33bbb0e5e1cd.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/d08efb40d3a9ef9fcb0a3fd1db4ce2ca.png"></p>
+<p><img src="D:/桌面/media/b37371125bbeed34df9bd0fe1a626e97.png"></p>
+<p>a=print_star</p>
+<p>b=a</p>
+<p>则a和b都指向了实际的对象，b不会指向a，a的改变（不是实际对象改变）不会影响b</p>
+<p>python的赋值都是引用赋值。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/0f8bea5b794089eadd01ffa7c98f50d4.png"></p>
+<p>栈区里面那个方框是栈帧，代表了def里面的变量。所以在def里面a覆盖了全局的a，如果a被声明为global，则是调用了帧外的那个a。栈帧里面是局部变量，外面（不在任何一个帧里面）是全局变量</p>
+<p>python的垃圾回收是指堆区的对象没有一个箭头（引用），则该对象被自动回收。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/b9c7d648809848d7986685869f4da8b4.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/1ee91cd71900052b8c774e931b9133e2.png"></p>
+<p>这个内置函数需要导入copy模块</p>
+<p><img src="D:/桌面/media/1b9c8a889b5c2bbfe5600b450bdc8cef.png"></p>
+<p>浅拷贝：拷贝一层对象，子对象拷贝了引用。对子对象的修改会影响到拷贝对象，对最浅层的修改不会。例如上面加一句b[1]=99，那么也不会影响到a</p>
+<p>深拷贝：直接完全复制，所有子对象都一起复制了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/4fc245c97f5a5c663912a8501dc3d4b4.png"></p>
+<p><img src="D:/桌面/media/065411778fd8a4a34c14bc4cc37c2343.png"></p>
+<p>这样想：函数在执行修改的时候，只有修改不了（不可变对象）的时候才会创建一个新的对象。当然，修改不了的时候会抛出异常，但是理解就行。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/4d18918fa76200a669686f5a1c41f96a.png"></p>
+<p>内部函数 是为了避免函数内大量重复代码。外面是不能调用内部函数的。</p>
+<p>non_local是声明外层的局部变量，目的是为了使用外层的局部变量。</p>
+<p><img src="D:/桌面/media/371bbfeca007041a4d2fccb52faa23d6.png"></p>
+<p>OOP</p>
+<p>Python的方法也是属性。</p>
+<p>类里面的属性和方法 都可以动态添加、修改，当然，是通过类名调用的。但是要注意一个事情，原方法需要self参数的，修改后的方法也应该有一个slef参数（参数名随便起，但必须有一个），不然就会报错</p>
+<p>python里面数字也是对象，java里面int等不是对象，有专门的数字对象。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/f7486670e2a166ba717b2ce0598d8026.png"></p>
+<p>_<em>init</em>_()是构造函数，用于初始化。</p>
+<p>_<em>new</em>_()是创建函数，用于函数的创建，但是我们一般不需要重定义。</p>
+<p>class里面的是共享属性，构造函数里面的是实例属性（self.定义的），对象私有的。</p>
+<p>实例方法是第一个参数是self的函数。</p>
+<p>self是实例的地址。这也就表明了为什么带self的是不共享的，不带self的是共享的。</p>
+<p>self参数是解释器自动传参的，我们不用管。</p>
+<p><img src="D:/桌面/media/f99102c872111faeb7dd1ad2a2961801.png"></p>
+<p>类对象，实例对象，类属性，和 实例属性之间的关系</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/4b2f84312ff3c8b33304eb3e0bb561bf.png"></p>
+<p>很少用</p>
+<p><img src="D:/桌面/media/26575707b05459b254bab673ca235799.png"><img src="D:/桌面/media/1c60770ae4336bd251147231b249eafc.png"></p>
+<p>静态对象不需要cls，也不需要self，就是一个普通函数，放在了类的命名空间</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/ce34dac57c89947c9a8e9f7451db0f0e.png"></p>
+<p>这也就说明了，类名调用的是__init__()函数，类名（）调用的是__call__()函数。</p>
+<p><strong>python里面没有方法（函数）重载，只要重名就会覆盖，哪怕一个有参一个无参。</strong></p>
+<p><img src="D:/桌面/media/bd0993c05d4bc74ad8b1f4b12c54a538.png"></p>
+<p>双下划线开头的是私有的，解释器在运行的时候 把 <strong>__私有方法</strong> 解释为<strong>_类名__私有方法</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/258dbfe3a3851d69bd1e7310436ff0c1.png"></strong></p>
+<p><strong><img src="D:/桌面/media/b726bea957e0e8684d6e0534a8bb007a.png"></strong></p>
+<p><strong>注意一下，这里salary必须是私有属性，不然就会报错。当然一般也只有私有属性会用这两个装饰器。</strong></p>
+<p>**<br>**</p>
+<p>python支持多重继承的，java不支持多重继承，但是java’可以有多个接口。</p>
+<p>python的类都默认继承了object类</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/d15b477cbe7914868d60c342942fa4dd.png"></p>
+<p>python的继承是除了构造函数全部继承，哪怕是私有也会被继承</p>
+<p><img src="D:/桌面/media/4f3f353fa13f5b110f07b58f362677f6.png"></p>
+<p>注意一下，在用super().xxx的时候，xxx不要加参数self</p>
+<p><strong>help(类名)可以看帮助文档</strong></p>
+<p><img src="D:/桌面/media/7586d446e88710f6a894c7fd051f799c.png"></p>
+<p>调用str(对象)的时候，实际上都是自动调用了对象的__str__()方法。</p>
+<p>实操中尽量避免多重继承。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/7977b6d03d0bcc400cd9e27f2667fc28.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/20e0ef7f2d608ca49e2ac416ed9cb827.png"></p>
+<p><img src="D:/桌面/media/964247d6f43c19678fdacb32d20d2962.png"></p>
+<p>super()代表的是父类的定义，不是对象。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/2ffe68ad9332090ac8962d181e3988b9.png"></p>
+<p><strong>重载运算符，则重写这些特殊方法就行</strong></p>
+<p>说起重载，python不支持自增自减运算符</p>
+<p><img src="D:/桌面/media/837d2d84e6058faf4d44bab587d2d989.png"></p>
+<p><img src="D:/桌面/media/af2a15a4388e51b8c50074ed34cae3e7.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/bc2d539e6c1fc425621fbc40f7a99968.png"></p>
+<p><img src="D:/桌面/media/e83c06af222ce2b98869cb8a8c0fbf04.png"></p>
+<p><img src="D:/桌面/media/aa9a92fd27744840c7bd690ca9582a4e.png"></p>
+<p>设计模式：工厂模式和单例模式。</p>
+<p>单例模式常用的方法就是重写__new__()方法</p>
+<p>异常处理</p>
+<p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/567a5f6a6d2dd4719b6e2212e67cb54b.png"><br><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/b698d9cb91c6deeae18581ce9e73cf4a.png"></strong></p>
+<p><strong>出现异常后，try语句里面异常后面的就不会执行了。except完成后，就接着执行except语句后面的语句</strong></p>
+<p><strong><img src="D:/桌面/media/c161001982d0608ca7da756dfb603730.png"></strong></p>
+<p><strong>先子类后父类，针对性地写代码</strong></p>
+<p>**<br>**</p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/e605df63744dec248f83bb9fb2935ed0.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/51dc122f44d5c6dad955adcb063a525d.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/a637fea850e68e326b198a6dcbba9e97.png"></strong></p>
+<p><strong>return放到异常处理语句里面通常会发生意想不到的错误，一般不建议</strong></p>
+<p><strong><img src="D:/桌面/media/69d0e7c17ddb38d79606ada48d8fa110.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/b39f6b57edcd68fcd4b1a8aee7ad3380.png"></strong></p>
+<p><strong>打开资源的时候用with比较方便，其他时间用finally更方便</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/9722de82fa2b86c5f772d7a29cecb606.png"></strong></p>
+<p><strong><img src="D:/桌面/media/d9adc2bceda871f9d7b7cc3d52ec9134.png"></strong></p>
+<p><strong>打印到文件里面</strong><a target="_blank" rel="noopener" href="https://www.runoob.com/python/python-func-open.html">Python open() 函数 | 菜鸟教程 (runoob.com)</a></p>
+<p><strong><img src="D:/桌面/media/f331f0e07584fa2100dc15cd929e2604.png"></strong></p>
+<p>**<br>**</p>
+<p><strong>文件操作</strong></p>
+<p><strong><img src="D:/桌面/media/97603811d560cb61623f087c3862950d.png"></strong></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mahoon411/article/details/109097222">python 字符串前面加‘r’的作用(并举例说明)_python中r的用法_吮指原味张的博客-CSDN博客</a></p>
+<p>r表明字符串不需要转义</p>
+<p>最好都使用with处理文件资源（不需要close()）</p>
+<p><strong>with xxx as x:……</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/63c9ea1a89f0de1ed9e139ee5acaa01f.png"></strong></p>
+<p><strong><img src="D:/桌面/media/8cbdd9a380c148eaac64796999fc2f3c.png"></strong></p>
+<p><strong>程序在写入文件的时候也是UTF-8</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/8ffb45ba4c0bab7f7291c2a481a6f664.png"></strong></p>
+<p>**<br>**</p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/3e166495ff6df5e49daa1ded93ca2aa6.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/2c5e4ab4f5d8a24e6de8fc5ea207d1e3.png"></strong></p>
+<p>**<br>**</p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/6632b903c963856103b0664fe310efc4.png"></strong></p>
+<p>**<br>**</p>
+<p><strong><img src="D:/桌面/media/9c862f20ee2979e7cf50c73da5dbf0ef.png"></strong></p>
+<p><strong><img src="D:/桌面/media/cf053e96f9ec44f3c8238e50582ba5fe.png"></strong></p>
+<p><strong>OS模块很重要，OS和OS.path</strong></p>
+<p><strong><img src="D:/桌面/media/35600c157168e0205da3942420749677.png"><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/d49c362255c2f3d204b8c4b50263293e.png"></strong></p>
+<p><strong>我们可以先调用mkdir（）创建目录，再open()创建文件。</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/python/python-func-repr.html">Python repr() 函数 | 菜鸟教程 (runoob.com)</a></p>
+<p>**repr()的主要作用是将换行符等格式字符转化为转义字符输出<br>**print(repr(os.linesep))</p>
+<p><strong>通过chdir()和mkdir()和makedirs()可以在任意已知目录创建目录（文件夹）</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/a175eee504097075b7c370b99b5934bd.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/1a26bbea91d7f4d8469015f217f43476.png"></strong></p>
+<p><strong><img src="D:/桌面/media/8cd9c3402256e3e43732d9a5964db0ce.png"></strong></p>
+<p><strong><img src="D:/桌面/media/2d162345cdcbab8d15ac2af2e358f059.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/19940b27caba1435eafd0c76a6e1e3f8.png"></strong></p>
+<p><strong>shutil模块是可以直接压缩一个文件夹，zipfile提供了动态压缩的方法</strong></p>
+<p>**<br>**</p>
+<p><strong>练习：在当前目录下怎么创建多级目录</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/dfa036235cd99929437ea4ad6c9f25d1.png"></strong></p>
+<p><strong>关键在于os.path.join()的使用，不要用r“\shuji\music\book”这种形式。而且不要在makedirs（）里面用相对路径，会被识别为“C：相对路径”。</strong></p>
+<p>**<br>**</p>
+<p><strong>练习（#重要#常用）：递归遍历目录树</strong></p>
+<p><strong><img src="D:/桌面/media/05fd91c33a1a57b408281898d1ba9d14.png"></strong></p>
+<p>**<br>**</p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/7e3a0b8a9052f91eb74f940e2052cef5.png"></strong></p>
+<p><strong>API（文档首部）相当于先搭好一个框架，构建好。具体的实现不提及，最后搭好后编码实现。</strong></p>
+<p><strong>有一些函数是不应该被外部调用的，最后变私有</strong></p>
+<p><strong>在math里面很多函数是pass，是因为这个模块是用来链接C库的，C已经写好了，python直接拿来用。</strong></p>
+<p><strong><img src="D:/桌面/media/201cd7bcc2fe2565b5e504874c70647e.png"></strong></p>
+<p>**<br>**</p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/e1f818703598f4af1643370bd0a6a45c.png"></strong></p>
+<p><strong>推荐from … import …,但不推荐from … import *。总是import一个模块，会让最后项目体积很臃肿。import后面是可以直接使用的，导入模块则 模块名.函数名，导入函数则 函数名。</strong></p>
+<p><strong>动态导入（一般用不到，少见）<br><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/a08422d3aa0f6f7a8a2c079e06a81b3d.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/796d86b5bad6b588c2463dce5c058826.png"><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/4d412c4a644c3e1a24d740c94b290352.png"></strong></p>
+<p>**<br>**</p>
+<p><strong><img src="D:/桌面/media/0c404f4455dfafc531533f0ea72003ac.png"></strong></p>
+<p><strong><img src="D:/桌面/media/6d13a317be7dd287ebb7a04ef9e31be7.png"></strong></p>
+<p>**<br>**</p>
+<p><strong>Tkinter学习（这个只适合最简单的，最好用PyQt）</strong></p>
+<p><strong>但是很多窗口框架之类的思想是通用的</strong></p>
+<p><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.11/library/tk.html">Tk图形用户界面(GUI) — Python 3.11.4 文档</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.tcl.tk/man/tcl8.6/TkCmd/contents.html">Tk Commands (tcl.tk)</a></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/b98aff805ddbb98dacbde454efb1c141.png"></strong></p>
+<p><strong>按钮等组件都需要pack()装载到窗口里，pack()默认是流水线（垂直）装载。</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/323160099463587c5a33d4310834b4d4.png"></strong></p>
+<p><strong>用Label显示图像的时候，图片需要是全局的。</strong></p>
+<p><strong>也可以将photo声明为self，实例参数。推荐声明为实例参数。</strong></p>
+<p><strong>command参数赋值不加（）</strong></p>
+<p><strong>label的很多功能是字典给的，label重载了“索引赋值”__setitem__函數。</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/cc4348d9260290ce1b12bc8891e881cf.png"></strong></p>
+<p><strong>Entry用来做单行文本框</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/3bbc8395eb890d96c101ab7c3dbad584.png">注意绑定的函数一定要有一个参数event</strong></p>
+<p>**<br>**</p>
+<p><strong>练习（自制登录系统without数据库版）：</strong></p>
+<p><strong>问题：一定要注意StringVar，要知道里面的内容应该用get()，不能直接和字符串比较</strong></p>
+<p><strong><img src="D:/桌面/media/b26eb59e6de9d221c58e6b35e7a60ccf.png"></strong></p>
+<p><strong>行从1开始，列从0开始</strong></p>
+<p><strong>Canvas的原点是左上角，一般用对角线两个点。</strong></p>
+<p><strong>grid（格子布局），pack（简单布局），place（坐标布局）</strong></p>
+<p><strong>练习（自制扑克牌）</strong></p>
+<p>关键在于bind_class()这个函数还有列表的使用</p>
+<p><strong>command方式只适合简单情况，不涉及event对象。bind（）函数处理event对象。</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/1eda32faa3a7c506c5a80556956588d9.png"></strong></p>
+<p><strong>还有很多具体函数什么的，看文件吧。</strong></p>
+<p><strong>注意：颜色选择框函数askcolor()会返回一个列表[(rgb),颜色代表字符]，调用bg和fg的时候，参数一般是列表第二项“字符”</strong></p>
+<p><strong><img src="D:/桌面/media/58e43ef161af6114361f6c54b5a94f8f.png"></strong></p>
+<p><strong>注意一下这个快捷键的处理，lambda返回的是“函数的名字（暂时这样理解吧）”。</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/98368a90b4e8186cdfccb332d8000e0d.png"></strong></p>
+<p><strong>这种lambda实现了已有函数的传参</strong></p>
+<p><strong><img src="D:/桌面/media/69beb7d10b276aae6a77ef600c44df0f.png"></strong></p>
+<p><strong>需要这种形式的时候参考，这些函数不用很容易忘。</strong></p>
+<p>**<br>**</p>
+<p><strong>打包</strong></p>
+<p><strong>在pyinstaller打包的时候，运行最后的exe总是弹出控制台，解决方法如下：</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/c0bd3fd85a82257d609a221b4ce3cb95.png"></strong></p>
+<p><strong>-w有时候不好用，推荐方法一</strong></p>
+<p>**<br>**</p>
+<p><strong>Pygame没有学，以后或许可以了解一下，留个位置吧</strong></p>
+<p>**<br>**</p>
+<p><strong>并发编程</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/python3/python3-multithreading.html">Python3 多线程 | 菜鸟教程 (runoob.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/threading.html">threading — 基于线程的并行 — Python 3.11.4 文档</a></p>
+<p><strong><img src="D:/桌面/media/17bb1627c9ec9707d575236f024c3587.png"></strong></p>
+<p><strong><img src="D:/桌面/media/d4897f63e60cdc922245e0e98a0b9a6b.png"></strong></p>
+<p><strong><img src="D:/桌面/media/60a174956571aac30effd1e2b0761614.png"></strong></p>
+<p><strong>容易忘，线程必须用start()启动</strong></p>
+<p><strong>哪怕不声明线程，每个程序启动都会有一个主线程。</strong></p>
+<p><strong>线程类一般重写__init__（）和run(),run()是start()后自动执行的</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/a9805712cb6ba8e0ab88922942745d3f.png"></strong></p>
+<p><strong>子线程①.join()就行了，主线程会等待这个子线程①</strong></p>
+<p><strong>直接使用线程是</strong><a target="_blank" rel="noopener" href="https://blog.csdn.net/chpllp/article/details/54381141">python多线程模块：threading使用方法（参数传递）_threading.thread 传入参数_chpllp的博客-CSDN博客</a></p>
+<p><strong>通过类方式使用线程：</strong></p>
+<p><strong><img src="D:/桌面/media/83cf6dee9f35e6c12d639aab7d0d5b02.png">子线程类的init只能用Thread，用super（）有问题。</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/03583c6d70f1fad84c3a881deb1707af.png"><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/83107a32b908af0517de1dbd869d3cf2.png"></strong></p>
+<p><strong>setDaemon()已经被废弃了，现在直接修改“属性”就行</strong></p>
+<p><strong>注意：必须先设置daemon才能start（），否则<img src="D:/桌面/media/78ff4f2647fe6cc0ffb7dc84ea701b51.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/670067e04d3c17704b584ffd4436cff5.png"><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/b7cb75dfd8556ebf5f1ff8801274b949.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/aa6b88fb9a0f56c97129549645b03d7f.png">这个锁的概念在数据库里比较详细</strong></p>
+<p><strong><img src="D:/桌面/media/770b8df096790aa66762c9982422a7bf.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/9837d98e798699acf620ef4eba1dfa13.png"><img src="D:/桌面/media/c77fc2dc50c7ccf4d997ac13c1853a85.png"></strong></p>
+<p><strong>这个acquire和release是信号量的方法。</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/5a2d15a46f7506800be8dc3f29e3fcfc.png">相当于tk的event对象</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/fc1f255d86521862732e2133980428c9.png"></strong></p>
+<p><strong>生产者和消费者模式：</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/9a19e21a0c1206b9236f5a5975d8aeaf.png">这个经常会见到的</strong></p>
+<p><strong>进程的类方法使用和线程差不多</strong></p>
+<p><strong>注意print(f“ada{arg}”)的使用</strong></p>
+<p><strong>注意：进程间不能直接使用代码的全局变量，全局变量是主进程的，新建的几个进程是用不了的（堆内存和栈内存都不共享）</strong></p>
+<p><strong>Manage管理器和Queue其实差不多，都是找一个内存空间，供所有进程存取。</strong></p>
+<p><strong><img src="D:/桌面/media/b71ad6e10602e06ed734cafe9a7b30d2.png"></strong></p>
+<p>**<br>**</p>
+<p><strong><img src="D:/桌面/media/249121b49b91bfc75f23350eba9c4e23.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/d0714153f35a004281c8c8c7ce4b97be.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/e5b98ad18581b788eb569efe01438de3.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/4b2e0017f9dcdde4da4b6634a45814fa.png"></strong></p>
+<p><strong><img src="D:/桌面/media/405fd07564cc2be747d31909d3f99c89.png"></strong></p>
+<p>套接字编程</p>
+<p><a target="_blank" rel="noopener" href="https://geek-docs.com/python/python-tutorial/python-socket.html">Python 套接字教程|极客教程 (geek-docs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/howto/sockets.html">套接字编程指南 — Python 3.11.4 文档</a></p>
+<p><strong><img src="D:/桌面/media/c5f9f6381b590e702b4e4bfcf922ddd7.png"><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/0e387551485169e715eec8a63a7a5740.png"></strong></p>
+<p><strong><img src="D:/桌面/media/187a42cd4f8d3aeffbefbd96eb291ebf.png"></strong></p>
+<p>TCP是有连接的，UDP是无连接的。所以connect函数是TCP的</p>
+<p><img src="D:/桌面/media/187a42cd4f8d3aeffbefbd96eb291ebf.png"></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/3c505e61f8728b922d7d4bc2d4ea663b.png"></strong></p>
+<p><strong><img src="D:/桌面/media/c33e04ca419b6ccd8d452d4f8d5385a1.png"></strong></p>
+<p><strong><img src="D:/桌面/media/ebeadcfc86331bea044c428a04d22d3d.png"></strong></p>
+<p><strong>发送数据的时候，python3把字符串转化为byte，默认的网络助手的编码是gbk</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/a83c5ea5af4243b9b0c790ae73607216.png"></strong></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Z_Stand/article/details/102535706">C语言网络编程：accept函数详解_c accept_z_stand的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cindy-cindy/p/8022009.html#:~:text=accept,%28%29%E6%8E%A5%E5%8F%97%E4%B8%80%E4%B8%AA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E8%BF%9E%E6%8E%A5%E8%AF%B7%E6%B1%82%EF%BC%8C%E5%B9%B6%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E5%A5%97%E6%8E%A5%E5%AD%97%EF%BC%8C%E4%B8%8D%E5%90%8C%E4%BA%8E%E4%BB%A5%E4%B8%8Asocket%20%28%29%E8%BF%94%E5%9B%9E%E7%9A%84%E7%94%A8%E4%BA%8E%E7%9B%91%E5%90%AC%E5%92%8C%E6%8E%A5%E5%8F%97%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E8%BF%9E%E6%8E%A5%E8%AF%B7%E6%B1%82%E7%9A%84%E5%A5%97%E6%8E%A5%E5%AD%97%EF%BC%9B%E4%B8%8E%E6%AD%A4%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%80%9A%E4%BF%A1%E6%98%AF%E9%80%9A%E8%BF%87%E8%BF%99%E4%B8%AA%E6%96%B0%E7%9A%84%E5%A5%97%E6%8E%A5%E5%AD%97%E4%B8%8A%E5%8F%91%E9%80%81%E5%92%8C%E6%8E%A5%E6%94%B6%E6%95%B0%E6%8D%AE%E6%9D%A5%E5%AE%8C%E6%88%90%E7%9A%84%E3%80%82">Python中网络编程对socket accept函数的理解 - 小女子的测试之路 - 博客园 (cnblogs.com)</a></p>
+<p><strong>发送数据的时候，python3把字符串转化为byte，默认的网络助手的编码是gbk</strong></p>
+<p><strong>注意：绑定的参数是一个元组_addr（IP地址，端口号）</strong></p>
+<p><strong>绑定bind的参数是_addr</strong></p>
+<p><strong>recv_from和recv的参数是最大字节数，因为UDP和TCP接受信息不可能事先就知道从哪儿来的（接收全球信息），没有_addr参数。</strong></p>
+<p><strong>send_to的参数要这个_addr，还要一个data（要转gbk）。send就不需要了，它是TCP的函数，已经建立好连接了，不用传参_addr</strong></p>
+<p><strong>第一步都是建立socket对象，最后一步都是关闭这个socket对象。UDP服务端接下来就是绑定bind和接受消息recv_from，最后close。UDP客户端接下来就直接是发送消息sendto。TCP的服务端接下来就是绑定，监听listen（参数是套接字排队的最大连接数，即同一时刻最多允许几个套接字连接），一个阻塞accept（返回一个client_socket对象和信息），接收recv（用前面返回的client_socket对象接收，因为同一时刻可能会有多个客户端，用client_socket区分），发送是send（也是用client_socket进行通信），关闭(先关client_socket，再关server_socket)。TCP的客户端需要connect（连接一下，参数就是_addr元组，用自己创建的client_socket调用），然后recv和send跟服务端一样。</strong></p>
+<p>**<br>**</p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/c5a4cc61addd0078d359c6ea19c568fd.png"><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/b636da3f185f8f6759b6e111de4895f3.png"></strong></p>
+<p><strong>高阶函数用函数当参数</strong></p>
+<p><strong>注意，如果函数参数需要参数，则这样定义高阶函数</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/81f916a8b27754d5d4f16547c4d3decf.png"></strong></p>
+<p><strong><img src="D:/桌面/media/2dc96d9a216380a4851dc1201f837e3f.png">实际上就是设置默认值的函数</strong></p>
+<p><strong>例如：默认的int（）的base默认是10</strong></p>
+<p><strong><img src="D:/桌面/media/77d643b897f7705e590c696b078f54bc.png">这样就把默认值从10变成了2</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/d5d8fb00c863534089314bf63a85dd67.png"><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/8828ca013db424b24ea008d2f0dad8f9.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/8a741d497008584d9aa72763c5d7efe6.png">闭包就是一个内部函数</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/d0c2859c084cc88c930b2eee16786830.png"></strong></p>
+<p><strong><img src="D:/桌面/media/7e0e94db24f8ba295c72d740966eb5ad.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/10921db4ce0a382876f0d7d8ee2371dc.png"></strong></p>
+<p><strong><img src="D:/桌面/media/1756974674cd648eb2e1b35ef8c8c17a.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/412e08f6ff32b36214c2a2967126a4eb.png"></strong></p>
+<p><strong><img src="D:/桌面/media/d7bb28e513aac1287f2434ba5828ddde.png">自由变量在外部栈帧消失后，由内部指向，所以不会被回收。自由变量不会污染其他程序，但是自由变量又有全局变量的好处。内部要修改自由变量的时候，要用nonlocal声明。</strong></p>
+<p><strong>闭包是装饰器的基础</strong></p>
+<p>**<br>**</p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/f84a29d4465d8e4296a50407001734c8.png"></strong></p>
+<p><strong>这个使用更方便，不用也行（写循环）</strong></p>
+<p><strong><img src="D:/桌面/media/5c9e5d388604ead3ed9bb7853d524481.png"></strong></p>
+<p><strong>快速检验：</strong>print(list(map(lambda a,b:a+b,[1,2,3,4],[10,20,30])))</p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/c2cb294883f8d5084128405af328a982.png"><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/b12977522c9f6acab2adf05930b6b52f.png"></strong></p>
+<p><strong>reduce就是累积的调用，注意“一个序列”，“至少两个参数”，需要导入模块</strong></p>
+<p>**<br>**</p>
+<p><strong><img src="D:/桌面/media/c9d0a488933197118cc20d292b30e856.png"></strong></p>
+<p><strong>注意，传入的函数返回值必须是布尔值。</strong></p>
+<p>**<br>**</p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/afb0f3c88f956d0ee8211638f9fbda20.png"></strong></p>
+<p><strong>实际上就是在函数参数前面一行加上@外部函数</strong></p>
+<p><strong>一个函数可以有多个装饰器</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/bfe84a775041a006f652425d72be4d29.png">实际上就是说</strong></p>
+<p><strong><img src="D:/桌面/media/336c3e414be4cf3f2710dc2f26fa3cdd.png">等于mylog(costlog(func1)).定义阶段先执行costlog再执行mylog。执行阶段先执行mylog再执行costlog</strong></p>
+<p><strong>装饰器有参数的时候，直接<img src="D:/桌面/media/020269843604ed6e0658ac955c3b3f99.png">就行</strong></p>
+<p><strong>注意一下，内部函数的邻近外部函数的参数应该是函数参数（我们一般写作func），最外层函数则不需要这个（如果最外层不是内部函数的邻近外层）。</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/93407d69391a7cbdd765dfe60684d83a.png"></strong></p>
+<p><strong><img src="D:/桌面/media/614f431f2e013aab0dbf65ab5a475a35.png"></strong></p>
+<p><strong>不使用wraps的话，后续调用func的doc等是空的。</strong></p>
+<p><strong>注意infunc（）一定要返回infunc</strong></p>
+<p>**<br>**</p>
+<p><strong><img src="D:/桌面/media/a71bea50315b6bd2661f159d8d1fd821.png">最常见property，其他不常见。</strong></p>
+<p><strong><img src="D:/桌面/media/3814c66b83692697ad7e3ab7beb5f7db.png">适合只有self参数的函数</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/6576c13a242c11cc9ff9e5d553a89d6a.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/b8d54002f864c43c45d57914f3e09a77.png"></strong></p>
+<p>**<br>**</p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/482f24e98ca8a6a09b571ff5ceaef263.png"></strong></p>
+<p><strong><img src="D:/桌面/media/77e06b09e9f0b28bd1e41c52bc7ee1c7.png"><img src="D:/桌面/media/2ebd2630cfb76c684cfed5e91c1adaf2.png"></strong></p>
+<p><strong>一般要将func函数参数初始化init为实例参数。</strong></p>
+<p>**<br>**</p>
+<p><strong><img src="D:/桌面/media/81db23386040a2d474817c7e3fce89b2.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/361f6c97fc2c5a96f35922409d591f7e.png"><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/3853ae15dd091c836067c99dcd9c2bb1.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/0bb363dee73c4c3ea0af2ccf3161cbbc.png"></strong></p>
+<p><strong>生成器的例子，用圆括号</strong></p>
+<p><strong><img src="D:/桌面/media/cc01e860a1a7d6f9df4de0afc1f79bd0.png"></strong></p>
+<p>**<br>**</p>
+<p><strong><img src="D:/桌面/media/8881ca70dc9f5874b399c779cc5b2baa.png"></strong></p>
+<p><strong>这个就触及了生成器的本质了</strong></p>
+<p><strong><img src="D:/桌面/media/011fcbf6116b9ef47ec7fadae24fa8e1.png"></strong></p>
+<p><strong>函数里面有一个yield类型对象，则函数就是生成器对象</strong></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mieleizhi0522/article/details/82142856">python中yield的用法详解——最简单，最清晰的解释_python yield_冯爽朗的博客-CSDN博客</a></p>
+<p>把yield理解为return就好，每次记录停留位置。</p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/6b3ee37d2363fad453f10b029d6d6c35.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/6207dcdd960f94135e3092d80da7c442.png">例如这个就代表了两个语句。</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/5b957086b366afaa10a0139c20b6489e.png"></strong></p>
+<p>**<br>**</p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/7a5492b1087087e5e37f21f8f9098519.png"></strong></p>
+<p><strong><img src="D:/桌面/media/2b071f5d71be22710c2d9298cec25028.png"></strong></p>
+<p><strong><img src="D:/桌面/media/0d7a529883cdcd8d4d1d26195dcf3009.png"></strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/c67ab68631f13d1101f4b68a260c636f.png"></strong></p>
+<p><strong>for循环就是调用iter（）将list，dict，str等转化为迭代器</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/f200f4d23bdea2ce320efc66a4590fcd.png"></strong></p>
+<p>**<br>**</p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/7dd6d8a841d2a15fcd80529c92ad6ff4.png"></strong></p>
+<p><strong>这个倒是不怎么用</strong></p>
+<p><strong>例子：</strong></p>
+<p><strong><img src="D:/桌面/media/b56d814dfd9db7b77b8a993ac7010f54.png"></strong></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/392519274">一文看懂python的迭代器和可迭代对象 - 知乎 (zhihu.com)</a></p>
+<p><strong>python是动态的，可以动态添加、修改属性和方法。但是需要注意的是方法需要用到形如</strong></p>
+<p><strong>cls1.func=types.MethondType(func1,cls1) ，而属性就可以直接赋值。</strong></p>
+<p><strong>但是可以用__slots__关键字限制动态添加成员变量和成员方法。</strong></p>
+<p>**<br>**</p>
+<p><strong>正则表达式是使用标准库的re模块。用到可以查资料。</strong></p>
+<p><strong><img src="D:/桌面/media/3b01e4cbc31af0e86153658d2a06ac23.png"></strong></p>
+<p><strong>pattern就是正则表达式。</strong></p>
+<p><strong>flags是标志位</strong></p>
+<p><strong><img src="D:/桌面/media/a7d4691384e2ec14bd650a747adebdce.png"></strong></p>
+<p>**<br>**</p>
+<p><strong>关键在于正则表达式的书写</strong></p>
+<p><strong><img src="D:/桌面/media/9d314434a7ae9e314ee2ecee3406235c.png"></strong></p>
+<p><strong>还有就是一个限定符</strong></p>
+<p><strong><img src="D:/桌面/media/2c1da7152391fa08d626e2ef326d2941.png"></strong></p>
+<p><strong>由于\是转义字符，在正则表达式中总会引起不便，可以用r前缀转换为原生字符串。</strong></p>
+<p><strong><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/f65f6f8a1c898b8802f6e83ac698bcfc.png"></strong></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/28/opengl-xue-xi-bi-ji/" rel="prev" title="OpenGL学习笔记">
+      <i class="fa fa-chevron-left"></i> OpenGL学习笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/09/28/java-ji-chu-xue-xi-wu-kuang-jia/" rel="next" title="java基础学习(无框架)">
+      java基础学习(无框架) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">liwuxuan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liwuxuan</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
