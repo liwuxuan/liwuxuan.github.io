@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>一些踩坑记录</title>
+      <link href="/2024/04/22/yi-xie-cai-keng-ji-lu/"/>
+      <url>/2024/04/22/yi-xie-cai-keng-ji-lu/</url>
+      
+        <content type="html"><![CDATA[<h2 id="1-Hyper-v的配置"><a href="#1-Hyper-v的配置" class="headerlink" title="1.Hyper-v的配置"></a>1.Hyper-v的配置</h2><h3 id="启动Hyper-v"><a href="#启动Hyper-v" class="headerlink" title="启动Hyper-v"></a>启动Hyper-v</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bcdedit /set hypervisorlaunchtype auto</span><br></pre></td></tr></tbody></table></figure><h3 id="关闭Hyper-v"><a href="#关闭Hyper-v" class="headerlink" title="关闭Hyper-v"></a>关闭Hyper-v</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bcdedit /set hypervisorlaunchtype off</span><br></pre></td></tr></tbody></table></figure><p>注意要管理员运行powershell</p><h2 id="2-80端口被系统进程占据"><a href="#2-80端口被系统进程占据" class="headerlink" title="2.80端口被系统进程占据"></a>2.80端口被系统进程占据</h2><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net stop http</span><br></pre></td></tr></tbody></table></figure><p><img src="https://cdn.jsdelivr.net/gh/liwuxuan/myblog@main/img/image-20240420192132752.png" alt="image-20240420192132752"></p><p>再设置http开机禁止自启动</p><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Service -Name http -StartupType Disabled</span><br></pre></td></tr></tbody></table></figure><p>参考链接：</p><p><a href="https://blog.csdn.net/weixin_34032621/article/details/92464790">解决pid=4的系统进程占据80端口的问题</a></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> hyper-v </tag>
+            
+            <tag> 80端口被系统进程占用 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>云计算实验报告3</title>
       <link href="/2024/03/23/yun-ji-suan-shi-yan-bao-gao-3/"/>
       <url>/2024/03/23/yun-ji-suan-shi-yan-bao-gao-3/</url>
